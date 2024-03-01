@@ -10,23 +10,30 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = BlackPrimary,  // Nastavte primárnu farbu na čiernu
+    secondary = Color.Black,  // Nastavte sekundárnu farbu na tmavo šedú
+    tertiary = Color.White,  // Nastavte terciárnu farbu na šedú
+    background = Color.Black, // Nastavte farbu pozadia na čiernu
+    surface = Color.Black,  // Nastavte farbu povrchu na čiernu
+    onPrimary = Color.White,  // Nastavte farbu textu na primárnej farbe na bielu
+    onSecondary = Color.White,  // Nastavte farbu textu na sekundárnej farbe na bielu
+    onTertiary = Color.White,  // Nastavte farbu textu na terciárnej farbe na bielu
+    onBackground = Color.White,  // Nastavte farbu textu na pozadí na bielu
+    onSurface = Color.White,  // Nastavte farbu textu na povrchu na bielu
+    // Môžete nastaviť aj ďalšie farby podľa potreby
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Purple40,
     secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
+    tertiary = Purple40,
     background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
@@ -34,14 +41,14 @@ private val LightColorScheme = lightColorScheme(
     onTertiary = Color.White,
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
-    */
-)
+
+    )
 
 @Composable
 fun BikeZoneTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
