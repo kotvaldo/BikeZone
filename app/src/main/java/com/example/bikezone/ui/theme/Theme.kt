@@ -58,12 +58,12 @@ fun BikeZoneTheme(
 
     if(darkTheme){
         systemUiController.setSystemBarsColor(
-            color = BlackPrimary,
+            color = BlackPrimary
         )
 
     }else{
         systemUiController.setSystemBarsColor(
-            color = LightPrimary,
+            color = LightPrimary
         )
     }
     val colorScheme = when {

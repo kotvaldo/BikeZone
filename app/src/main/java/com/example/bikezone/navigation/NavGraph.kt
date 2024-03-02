@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.bikezone.screens.AboutScreen
 import com.example.bikezone.screens.CartScreen
 import com.example.bikezone.screens.HomeScreen
 import com.example.bikezone.screens.ProfileScreen
@@ -30,6 +31,11 @@ fun SetupNavGraph(
             route = Screens.Cart.route
         ) {
             CartScreen()
+        }
+        composable(
+            route = Screens.About.route
+        ) {
+            AboutScreen()
         }
     }
 }

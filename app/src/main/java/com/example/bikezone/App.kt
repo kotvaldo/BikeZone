@@ -52,7 +52,7 @@ fun BikeZoneApp(
     val navController: NavHostController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val drawerScreens = mutableListOf(Screens.Profile)
+    val drawerScreens = mutableListOf(Screens.Profile, Screens.About)
     val bottomNavBarScreens = mutableListOf(Screens.Home, Screens.Cart)
     val currentScreen = remember {
         mutableStateOf(navController.currentBackStackEntry?.destination?.route)
@@ -151,9 +151,7 @@ fun BikeZoneApp(
                         }
                     )
                 }, bottomBar = {
-                    NavigationBar(
-
-                    ) {
+                    NavigationBar {
                         bottomNavBarScreens.forEach { screen ->
                             NavigationBarItem(
                                 icon = {
