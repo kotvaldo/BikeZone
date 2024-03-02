@@ -15,12 +15,15 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+
 
 private val DarkColorScheme = darkColorScheme(
-    primary = BlackPrimary,  // Nastavte primárnu farbu na čiernu
-    secondary = Color.Black,  // Nastavte sekundárnu farbu na tmavo šedú
+    primary = Color.Black,  // Nastavte primárnu farbu na čiernu
+    secondary = BlackPrimary,  // Nastavte sekundárnu farbu na tmavo šedú
     tertiary = Color.White,  // Nastavte terciárnu farbu na šedú
-    background = Color.Black, // Nastavte farbu pozadia na čiernu
+    background = BlackPrimary, // Nastavte farbu pozadia na čiernu
     surface = Color.Black,  // Nastavte farbu povrchu na čiernu
     onPrimary = Color.White,  // Nastavte farbu textu na primárnej farbe na bielu
     onSecondary = Color.White,  // Nastavte farbu textu na sekundárnej farbe na bielu
@@ -31,16 +34,16 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Purple40,
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
+    primary = Color.White,
+    secondary = LightPrimary,
+    tertiary = Color.Black,
+    background = LightPrimary,
+    surface = Color.White,
+    onPrimary = Color.Black,
+    onSecondary = Color.Black,
+    onTertiary = Color.Black,
+    onBackground = Color.Black,
+    onSurface = Color.Black,
 
     )
 
@@ -49,8 +52,19 @@ fun BikeZoneTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
+    val systemUiController: SystemUiController = rememberSystemUiController()
+
+    if(darkTheme){
+        systemUiController.setSystemBarsColor(
+            color = Color.White
+        )
+    }else{
+        systemUiController.setSystemBarsColor(
+            color = Color.Black
+        )
+    }
     val colorScheme = when {
       dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
         val context = LocalContext.current

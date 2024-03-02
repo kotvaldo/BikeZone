@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.Modifier.*
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.bikezone.navigation.Screens
@@ -60,6 +61,8 @@ fun BikeZoneApp(
         }
         navController.addOnDestinationChangedListener(callback)
     }
+
+
     Box {
         ModalNavigationDrawer(
             drawerState = drawerState,
@@ -74,7 +77,8 @@ fun BikeZoneApp(
                     ) {
                     }
                     Spacer(
-                        modifier = Modifier
+                        modifier = Modifier.height(20.dp)
+                            .fillMaxWidth()
                     ) // Add more screens as needed
                     Column(
                         Modifier
@@ -99,8 +103,15 @@ fun BikeZoneApp(
                                     coroutineScope.launch {
                                         drawerState.close()
                                     }
-                                    navController.navigate(screen.route)
+                                    navController.navigate(screen.route) {
+                                        popUpTo(navController.graph.findStartDestination().id) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
                                     currentScreen.value = screen.route
+
                                 },
                                 modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                             )
@@ -112,7 +123,7 @@ fun BikeZoneApp(
             }
         ) {
             Scaffold(
-                topBar = {
+                topBar = { Modifier.background(MaterialTheme.colorScheme.primary)
                     TopAppBar(
                         title = {
                             Text(text = currentScreen.value?.let { route ->
