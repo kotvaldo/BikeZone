@@ -15,14 +15,12 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.google.accompanist.systemuicontroller.SystemUiController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color.Black,  // Nastavte primárnu farbu na čiernu
     secondary = BlackPrimary,  // Nastavte sekundárnu farbu na tmavo šedú
-    tertiary = Color.White,  // Nastavte terciárnu farbu na šedú
+    tertiary = Color.Black,  // Nastavte terciárnu farbu na šedú
     background = BlackPrimary, // Nastavte farbu pozadia na čiernu
     surface = Color.Black,  // Nastavte farbu povrchu na čiernu
     onPrimary = Color.White,  // Nastavte farbu textu na primárnej farbe na bielu
@@ -36,7 +34,7 @@ private val DarkColorScheme = darkColorScheme(
 private val LightColorScheme = lightColorScheme(
     primary = Color.White,
     secondary = LightPrimary,
-    tertiary = Color.Black,
+    tertiary = Color.White,
     background = LightPrimary,
     surface = Color.White,
     onPrimary = Color.Black,
@@ -54,17 +52,7 @@ fun BikeZoneTheme(
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit,
 ) {
-    val systemUiController: SystemUiController = rememberSystemUiController()
 
-    if(darkTheme){
-        systemUiController.setSystemBarsColor(
-            color = Color.White
-        )
-    }else{
-        systemUiController.setSystemBarsColor(
-            color = Color.Black
-        )
-    }
     val colorScheme = when {
       dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
         val context = LocalContext.current
@@ -78,7 +66,7 @@ fun BikeZoneTheme(
       SideEffect {
         val window = (view.context as Activity).window
         window.statusBarColor = colorScheme.primary.toArgb()
-        WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+        WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
       }
     }
 
