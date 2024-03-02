@@ -20,6 +20,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
@@ -42,6 +44,7 @@ import com.example.bikezone.navigation.SetupNavGraph
 import kotlinx.coroutines.launch
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun BikeZoneApp(
@@ -49,10 +52,12 @@ fun BikeZoneApp(
     val navController: NavHostController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val screens = mutableListOf(Screens.Home, Screens.Profile, Screens.Cart)
+    val drawerScreens = mutableListOf(Screens.Profile)
+    val bottomNavBarScreens = mutableListOf(Screens.Home, Screens.Cart)
     val currentScreen = remember {
         mutableStateOf(navController.currentBackStackEntry?.destination?.route)
     }
+
 
     LaunchedEffect(navController) {
         val callback = NavController.OnDestinationChangedListener { _, _, _ ->
@@ -76,7 +81,8 @@ fun BikeZoneApp(
                     ) {
                     }
                     Spacer(
-                        modifier = Modifier.height(20.dp)
+                        modifier = Modifier
+                            .height(20.dp)
                             .fillMaxWidth()
                     ) // Add more screens as needed
                     Column(
@@ -86,7 +92,7 @@ fun BikeZoneApp(
                                 MaterialTheme.colorScheme.primary
                             )
                     ) {
-                        screens.forEach { screen ->
+                        drawerScreens.forEach { screen ->
                             NavigationDrawerItem(
                                 label = { Text(text = screen.title) },
                                 selected = screen.route == currentScreen.value,
@@ -125,9 +131,12 @@ fun BikeZoneApp(
                 topBar = {
                     TopAppBar(
                         title = {
-                            Text(text = currentScreen.value?.let { route ->
-                                screens.firstOrNull { it.route == route }?.title ?: "BikeZone"
-                            } ?: "BikeZone")
+                            Text(
+                                text = currentScreen.value?.let { route ->
+                                    drawerScreens.firstOrNull { it.route == route }?.title
+                                        ?: bottomNavBarScreens.firstOrNull { it.route == route }?.title
+                                        ?: "BikeZone"
+                                } ?: "BikeZone")
                         },
                         navigationIcon = {
                             IconButton(onClick = {
@@ -141,7 +150,38 @@ fun BikeZoneApp(
                             }
                         }
                     )
+                }, bottomBar = {
+                    NavigationBar(
+
+                    ) {
+                        bottomNavBarScreens.forEach { screen ->
+                            NavigationBarItem(
+                                icon = {
+                                    Icon(
+                                        imageVector = if (screen.route == currentScreen.value) {
+                                            screen.selectedIcon
+                                        } else screen.unselectedIcon,
+                                        contentDescription = "${screen.title} icon"
+                                    )
+                                },
+                                label = { Text(text = screen.title) },
+                                selected = screen.route == currentScreen.value,
+                                onClick = {
+                                    navController.navigate(screen.route) {
+                                        popUpTo(navController.graph.findStartDestination().id) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        // Restore state when reselecting a previously selected item
+                                        restoreState = true
+                                    }
+                                    currentScreen.value = screen.route
+                                }
+                            )
+                        }
+                    }
                 }
+
             ) {
                 SetupNavGraph(navController = navController)
             }
