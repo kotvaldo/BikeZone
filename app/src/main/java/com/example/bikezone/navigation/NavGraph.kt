@@ -12,9 +12,8 @@ fun SetupNavGraph(
         navController = navController,
         startDestination = Routes.AuthRoute.route
     ) {
-
-        setupAppGraph(navController)
         setupAuthGraph(navController)
+        setupAppGraph(navController)
 
     }
 }

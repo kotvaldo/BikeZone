@@ -19,17 +19,17 @@ fun NavGraphBuilder.setupAppGraph(navController: NavController) {
         composable(
             route = Screens.Profile.route
         ) {
-            ProfileScreen()
+            ProfileScreen(navController)
         }
         composable(
             route = Screens.Cart.route
         ) {
-            CartScreen()
+            CartScreen(navController)
         }
         composable(
             route = Screens.About.route
         ) {
-            AboutScreen()
+            AboutScreen(navController)
         }
 
 

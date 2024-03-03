@@ -29,14 +29,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import com.example.bikezone.navigation.Screens
 import kotlinx.coroutines.launch
 
@@ -45,23 +42,13 @@ import kotlinx.coroutines.launch
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun BikeZoneApp(
-    navController: NavController
+    navController: NavHostController,
+    currentScreen: MutableState<String?>,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val drawerScreens = mutableListOf(Screens.Profile, Screens.About)
     val bottomNavBarScreens = mutableListOf(Screens.Home, Screens.Cart)
-    val currentScreen = remember {
-        mutableStateOf(navController.currentBackStackEntry?.destination?.route)
-    }
-
-
-    LaunchedEffect(navController) {
-        val callback = NavController.OnDestinationChangedListener { _, _, _ ->
-            currentScreen.value = navController.currentBackStackEntry?.destination?.route
-        }
-        navController.addOnDestinationChangedListener(callback)
-    }
 
 
     Box {
@@ -106,7 +93,7 @@ fun BikeZoneApp(
                                         drawerState.close()
                                     }
                                     navController.navigate(screen.route) {
-                                        popUpTo(navController.graph.findStartDestination().id) {
+                                        popUpTo(Screens.Home.route) {
                                             saveState = true
                                         }
                                         launchSingleTop = true
@@ -163,11 +150,11 @@ fun BikeZoneApp(
                                 selected = screen.route == currentScreen.value,
                                 onClick = {
                                     navController.navigate(screen.route) {
-                                        popUpTo(navController.graph.findStartDestination().id) {
+                                        popUpTo(Screens.Home.route) {
                                             saveState = true
                                         }
                                         launchSingleTop = true
-                                        // Restore state when reselecting a previously selected item
+
                                         restoreState = true
                                     }
                                     currentScreen.value = screen.route
@@ -178,7 +165,6 @@ fun BikeZoneApp(
                 }
 
             ) {
-
             }
         }
 
