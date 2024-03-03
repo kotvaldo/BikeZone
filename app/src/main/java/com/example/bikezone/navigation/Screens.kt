@@ -46,4 +46,5 @@ sealed class Screens(
         selectedIcon = Icons.Filled.Info,
         unselectedIcon = Icons.Outlined.Info
     )
+
 }

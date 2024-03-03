@@ -12,7 +12,7 @@ import androidx.navigation.NavController
 import com.example.bikezone.ui.theme.BikeZoneTheme
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun LoginScreen(navController: NavController) {
     BikeZoneTheme {
         Box(
             modifier = Modifier

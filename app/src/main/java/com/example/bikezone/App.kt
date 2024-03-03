@@ -37,10 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.bikezone.navigation.Screens
-import com.example.bikezone.navigation.SetupNavGraph
 import kotlinx.coroutines.launch
 
 
@@ -48,8 +45,8 @@ import kotlinx.coroutines.launch
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun BikeZoneApp(
+    navController: NavController
 ) {
-    val navController: NavHostController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val drawerScreens = mutableListOf(Screens.Profile, Screens.About)
@@ -181,7 +178,7 @@ fun BikeZoneApp(
                 }
 
             ) {
-                SetupNavGraph(navController = navController)
+
             }
         }
 

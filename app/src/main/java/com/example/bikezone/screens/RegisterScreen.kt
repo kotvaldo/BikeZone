@@ -12,7 +12,7 @@ import androidx.navigation.NavController
 import com.example.bikezone.ui.theme.BikeZoneTheme
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun RegisterScreen(navController: NavController) {
     BikeZoneTheme {
         Box(
             modifier = Modifier
@@ -21,7 +21,7 @@ fun HomeScreen(navController: NavController) {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "Welcome to homeScreen",
+                text = "Welcome to register",
                 color = MaterialTheme.colorScheme.onPrimary
             )
         }

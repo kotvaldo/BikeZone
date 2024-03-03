@@ -15,8 +15,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.google.accompanist.systemuicontroller.SystemUiController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 private val DarkColorScheme = darkColorScheme(
@@ -54,18 +52,7 @@ fun BikeZoneTheme(
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit,
 ) {
-    val systemUiController: SystemUiController = rememberSystemUiController()
 
-    if(darkTheme){
-        systemUiController.setSystemBarsColor(
-            color = BlackPrimary
-        )
-
-    }else{
-        systemUiController.setSystemBarsColor(
-            color = LightPrimary
-        )
-    }
     val colorScheme = when {
       dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
         val context = LocalContext.current
@@ -79,6 +66,7 @@ fun BikeZoneTheme(
       SideEffect {
         val window = (view.context as Activity).window
         window.statusBarColor = colorScheme.primary.toArgb()
+          window.navigationBarColor = colorScheme.primary.toArgb()
         WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
       }
     }
