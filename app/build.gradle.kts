@@ -74,7 +74,7 @@ dependencies {
     // Optional - Add window size utils
     implementation("androidx.compose.material3:material3-window-size-class")
 
-    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.34.0")
     // Optional - Integration with activities
     implementation("androidx.activity:activity-compose:1.8.2")
     // Optional - Integration with ViewModels
