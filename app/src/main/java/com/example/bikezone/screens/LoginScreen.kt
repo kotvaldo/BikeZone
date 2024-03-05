@@ -31,10 +31,17 @@ fun LoginScreen(navController: NavController) {
 
             Button(onClick = {
                 navController.navigate(Routes.AppRoute.route) {
+                    popUpTo(Routes.AuthRoute.route) {
+                        inclusive = false
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+
                 }
             }) {
 
             }
         }
     }
+
 }

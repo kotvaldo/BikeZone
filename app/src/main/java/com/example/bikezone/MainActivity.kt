@@ -30,14 +30,17 @@ class MainActivity : ComponentActivity() {
                 currentScreen = remember {
                     mutableStateOf(navController.currentBackStackEntry?.destination?.route)
                 }
+
                 LaunchedEffect(navController) {
                     val callback = NavController.OnDestinationChangedListener { _, _, _ ->
                         currentScreen.value = navController.currentBackStackEntry?.destination?.route
                     }
                     navController.addOnDestinationChangedListener(callback)
                 }
-                if (currentScreen.value == Routes.AppRoute.route || screens.any { it.route == currentScreen.value })
-                BikeZoneApp(navController = navController, currentScreen)
+                if (currentScreen.value == Routes.AppRoute.route || screens.any { it.route == currentScreen.value }) {
+                    BikeZoneApp(navController = navController, currentScreen)
+                }
+
             }
         }
     }

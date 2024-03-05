@@ -149,12 +149,12 @@ fun BikeZoneApp(
                                 label = { Text(text = screen.title) },
                                 selected = screen.route == currentScreen.value,
                                 onClick = {
+                                    // Ak nie sme na HomeScreen, prepneme na neho
                                     navController.navigate(screen.route) {
                                         popUpTo(Screens.Home.route) {
                                             saveState = true
                                         }
                                         launchSingleTop = true
-
                                         restoreState = true
                                     }
                                     currentScreen.value = screen.route
