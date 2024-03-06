@@ -117,7 +117,8 @@ fun BikeZoneApp(
                     TopAppBar(
                         title = {
                             Text(
-                                fontFamily = fontFamily
+                                fontFamily = fontFamily,
+                                color = MaterialTheme.colorScheme.onPrimary
                                 ,text = currentScreen.value?.let { route ->
                                     drawerScreens.firstOrNull { it.route == route }?.title
                                         ?: bottomNavBarScreens.firstOrNull { it.route == route }?.title
@@ -148,7 +149,7 @@ fun BikeZoneApp(
                                         contentDescription = "${screen.title} icon"
                                     )
                                 },
-                                label = { Text(text = screen.title, fontFamily = fontFamily) },
+                                label = { Text(text = screen.title, fontFamily = fontFamily, color = MaterialTheme.colorScheme.onPrimary) },
                                 selected = screen.route == currentScreen.value,
                                 onClick = {
                                     // Ak nie sme na HomeScreen, prepneme na neho
