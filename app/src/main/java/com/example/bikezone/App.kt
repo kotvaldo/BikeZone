@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.bikezone.navigation.Screens
+import com.example.bikezone.ui.theme.fontFamily
 import kotlinx.coroutines.launch
 
 
@@ -116,7 +117,8 @@ fun BikeZoneApp(
                     TopAppBar(
                         title = {
                             Text(
-                                text = currentScreen.value?.let { route ->
+                                fontFamily = fontFamily
+                                ,text = currentScreen.value?.let { route ->
                                     drawerScreens.firstOrNull { it.route == route }?.title
                                         ?: bottomNavBarScreens.firstOrNull { it.route == route }?.title
                                         ?: "BikeZone"
@@ -146,7 +148,7 @@ fun BikeZoneApp(
                                         contentDescription = "${screen.title} icon"
                                     )
                                 },
-                                label = { Text(text = screen.title) },
+                                label = { Text(text = screen.title, fontFamily = fontFamily) },
                                 selected = screen.route == currentScreen.value,
                                 onClick = {
                                     // Ak nie sme na HomeScreen, prepneme na neho
