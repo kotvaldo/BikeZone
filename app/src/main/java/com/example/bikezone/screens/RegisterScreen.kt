@@ -30,7 +30,7 @@ fun RegisterScreen(navController: NavController) {
 
                 Text(
                     text = "Welcome to Register",
-                    color = MaterialTheme.colorScheme.onPrimary
+                    color = MaterialTheme.colorScheme.onBackground
                 )
 
                 Button(

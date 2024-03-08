@@ -18,12 +18,12 @@ import androidx.core.view.WindowCompat
 
 
 private val DarkColorScheme = darkColorScheme(
-    primary = BlackPrimary,  // Nastavte primárnu farbu na čiernu
-    secondary = BlackPrimary,  // Nastavte sekundárnu farbu na tmavo šedú
-    tertiary = BlackPrimary,  // Nastavte terciárnu farbu na šedú
-    background = Color.Black, // Nastavte farbu pozadia na čiernu
-    surface = BlackPrimary,  // Nastavte farbu povrchu na čiernu
-    onPrimary = Color.White,  // Nastavte farbu textu na primárnej farbe na bielu
+    primary = Color.White,  // Nastavte primárnu farbu na čiernu
+    secondary = DarkPrimary,  // Nastavte sekundárnu farbu na tmavo šedú
+    tertiary = DarkPrimary,  // Nastavte terciárnu farbu na šedú
+    background = DarkPrimary, // Nastavte farbu pozadia na čiernu
+    surface = DarkPrimary,  // Nastavte farbu povrchu na čiernu
+    onPrimary = Color.Black,  // Nastavte farbu textu na primárnej farbe na bielu
     onSecondary = Color.White,  // Nastavte farbu textu na sekundárnej farbe na bielu
     onTertiary = Color.White,  // Nastavte farbu textu na terciárnej farbe na bielu
     onBackground = Color.White,  // Nastavte farbu textu na pozadí na bielu
@@ -32,16 +32,16 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = LightPrimary,
+    primary = DarkPrimary,
     secondary = LightPrimary,
     tertiary = LightPrimary,
-    background = Color.White,
+    background = LightPrimary,
     surface = LightPrimary,
     onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color.White,
-    onSurface = Color.White,
+    onSecondary = Color.Black,
+    onTertiary = Color.Black,
+    onBackground = Color.Black,
+    onSurface = Color.Black,
 
     )
 
@@ -65,8 +65,8 @@ fun BikeZoneTheme(
     if (!view.isInEditMode) {
       SideEffect {
         val window = (view.context as Activity).window
-        window.statusBarColor = colorScheme.primary.toArgb()
-          window.navigationBarColor = colorScheme.primary.toArgb()
+        window.statusBarColor = colorScheme.surface.toArgb()
+          window.navigationBarColor = colorScheme.surface.toArgb()
         WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
       }
     }
