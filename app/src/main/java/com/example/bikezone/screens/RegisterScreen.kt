@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -44,7 +45,7 @@ fun RegisterScreen(navController: NavController) {
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.logo),
-                    contentDescription = "logoImage",
+                    contentDescription = stringResource(id = R.string.str_logo_image),
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxWidth(0.1f) // Nastavenie výšky obrázku
@@ -61,10 +62,10 @@ fun RegisterScreen(navController: NavController) {
                     modifier = Modifier.padding(vertical = 16.dp)
                 )
 
-                SimpleTextField(label = "Login", modifier = Modifier.padding(bottom = 10.dp))
-                SimpleTextField(label = "E-Mail", modifier = Modifier.padding(bottom = 10.dp))
-                SimpleTextField(label = "Heslo", modifier = Modifier.padding(bottom = 10.dp))
-                SimpleTextField(label = "Adresa", modifier = Modifier.padding(bottom = 10.dp))
+                SimpleTextField(label = stringResource(id = R.string.str_login), modifier = Modifier.padding(bottom = 10.dp))
+                SimpleTextField(label = stringResource(id = R.string.str_email), modifier = Modifier.padding(bottom = 10.dp))
+                SimpleTextField(label = stringResource(id = R.string.str_password), modifier = Modifier.padding(bottom = 10.dp))
+                SimpleTextField(label = stringResource(id = R.string.str_address), modifier = Modifier.padding(bottom = 10.dp))
 
                 Button(
                     onClick = {
@@ -77,10 +78,10 @@ fun RegisterScreen(navController: NavController) {
                         }
                     }
                 ) {
-                    Text(text = "Register")
+                    Text(text = stringResource(id = R.string.str_register))
                 }
                 Text(
-                    text = "Máte založený účet ? ",
+                    text = stringResource(id = R.string.str_already_registered),
                     color = MaterialTheme.colorScheme.onBackground,
                     textAlign = TextAlign.Center,
                     fontSize = 15.sp,
@@ -91,7 +92,7 @@ fun RegisterScreen(navController: NavController) {
                         navController.navigate(AuthScreens.Login.route)
                     },
                 ) {
-                    Text(text = "Login")
+                    Text(text = stringResource(id = R.string.str_login))
                 }
             }
 

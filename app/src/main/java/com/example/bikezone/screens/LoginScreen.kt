@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
@@ -51,7 +52,7 @@ fun LoginScreen(navController: NavController) {
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.logo),
-                    contentDescription = "logoImage",
+                    contentDescription = stringResource(id = R.string.str_logo_image) ,
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight(0.3f) // Nastavenie výšky obrázku
@@ -60,7 +61,7 @@ fun LoginScreen(navController: NavController) {
                 )
 
                 Text(
-                    text = "Login",
+                    text = stringResource(id = R.string.str_login),
                     color = MaterialTheme.colorScheme.onBackground,
                     textAlign = TextAlign.Center,
                     fontSize = 35.sp,
@@ -68,8 +69,8 @@ fun LoginScreen(navController: NavController) {
                     modifier = Modifier.padding(vertical = 16.dp)
                 )
 
-                SimpleTextField(label = "E-Mail", modifier = Modifier.padding(bottom = 10.dp, top = 20.dp))
-                SimpleTextField(label = "Heslo", modifier = Modifier.padding(bottom = 10.dp))
+                SimpleTextField(label = stringResource(id = R.string.str_email), modifier = Modifier.padding(bottom = 10.dp, top = 20.dp))
+                SimpleTextField(label = stringResource(id = R.string.str_password), modifier = Modifier.padding(bottom = 10.dp))
 
                 Button(
                     onClick = {
@@ -82,11 +83,11 @@ fun LoginScreen(navController: NavController) {
                         }
                     },
                 ) {
-                    Text(text = "Login")
+                    Text(text = stringResource(id = R.string.str_login))
                 }
 
                 Text(
-                    text = "Nemáte založený účet ?",
+                    text = stringResource(id = R.string.str_not_have_account),
                     color = MaterialTheme.colorScheme.onBackground,
                     textAlign = TextAlign.Center,
                     fontSize = 15.sp,
@@ -98,7 +99,7 @@ fun LoginScreen(navController: NavController) {
                         navController.navigate(AuthScreens.Register.route)
                     },
                 ) {
-                    Text(text = "Register")
+                    Text(text = stringResource(id = R.string.str_register))
                 }
             }
 
