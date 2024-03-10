@@ -1,19 +1,32 @@
 package com.example.bikezone.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.bikezone.R
 import com.example.bikezone.navigation.AuthScreens
 import com.example.bikezone.navigation.Routes
 import com.example.bikezone.ui.theme.BikeZoneTheme
+import com.example.bikezone.ui.theme.DarkPrimary
 
 @Composable
 fun RegisterScreen(navController: NavController) {
@@ -22,16 +35,36 @@ fun RegisterScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background),
-            contentAlignment = Alignment.Center
         ) {
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()), // Pridanie posúvateľnosti
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                Image(
+                    painter = painterResource(id = R.drawable.logo),
+                    contentDescription = "logoImage",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxWidth(0.1f) // Nastavenie výšky obrázku
+                        .background(DarkPrimary),
+                    contentScale = ContentScale.Fit
+                )
 
                 Text(
-                    text = "Welcome to Register",
-                    color = MaterialTheme.colorScheme.onBackground
+                    text = "Register",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    textAlign = TextAlign.Center,
+                    fontSize = 35.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(vertical = 16.dp)
                 )
+
+                SimpleTextField(label = "Login", modifier = Modifier.padding(bottom = 10.dp))
+                SimpleTextField(label = "E-Mail", modifier = Modifier.padding(bottom = 10.dp))
+                SimpleTextField(label = "Heslo", modifier = Modifier.padding(bottom = 10.dp))
+                SimpleTextField(label = "Adresa", modifier = Modifier.padding(bottom = 10.dp))
 
                 Button(
                     onClick = {
@@ -41,23 +74,26 @@ fun RegisterScreen(navController: NavController) {
                             }
                             launchSingleTop = true
                             restoreState = true
-
                         }
                     }
                 ) {
                     Text(text = "Register")
                 }
-
+                Text(
+                    text = "Máte založený účet ? ",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    textAlign = TextAlign.Center,
+                    fontSize = 15.sp,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
                 Button(
                     onClick = {
-                        navController.navigate(AuthScreens.Login.route) {
-                        }
-                    }
+                        navController.navigate(AuthScreens.Login.route)
+                    },
                 ) {
                     Text(text = "Login")
                 }
             }
-
 
         }
     }

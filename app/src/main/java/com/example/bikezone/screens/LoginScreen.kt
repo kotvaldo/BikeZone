@@ -3,10 +3,13 @@ package com.example.bikezone.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -24,7 +28,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import com.example.bikezone.R
 import com.example.bikezone.navigation.AuthScreens
@@ -40,97 +43,67 @@ fun LoginScreen(navController: NavController) {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background),
         ) {
-            ConstraintLayout {
-                val image = createRef()
-                val text = createRef()
-                val row = createRef()
-                val textFieldName = createRef()
-                val textFieldEmail = createRef()
-                val textFieldPassword = createRef()
-
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()), // Pridanie posúvateľnosti
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable.logo),
-                    contentDescription = "logoImage", // popis obsahu môžete nastaviť podľa potreby
+                    contentDescription = "logoImage",
                     modifier = Modifier
-                        .fillMaxHeight(0.3f)
                         .fillMaxWidth()
-                        .constrainAs(image) {
-                            top.linkTo(parent.top) // Viazanie obrázka k hornému okraju kontajnera
-                            start.linkTo(parent.start) // Viazanie obrázka k ľavému okraju kontajnera
-                            end.linkTo(parent.end) // Viazanie obrázka k pravému okraju kontajnera
-                        }
+                        .fillMaxHeight(0.3f) // Nastavenie výšky obrázku
                         .background(DarkPrimary),
-
-                    contentScale = ContentScale.Fit,
+                    contentScale = ContentScale.Fit
                 )
+
                 Text(
                     text = "Login",
                     color = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.constrainAs(text) {
-                        top.linkTo(image.bottom, margin = 30.dp)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    },
                     textAlign = TextAlign.Center,
                     fontSize = 35.sp,
-                    fontWeight = FontWeight.Bold
-
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(vertical = 16.dp)
                 )
-                SimpleTextField(label = "Name",
-                    modifier = Modifier.constrainAs(textFieldName) {
-                        top.linkTo(text.bottom, margin = 10.dp)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    })
-                SimpleTextField(label = "E-Mail",
-                    modifier = Modifier.constrainAs(textFieldEmail) {
-                        top.linkTo(textFieldName.bottom, margin = 10.dp)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    })
-                SimpleTextField(label = "Password",
-                    modifier = Modifier.constrainAs(textFieldPassword) {
-                        top.linkTo(textFieldEmail.bottom, margin = 10.dp)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    })
-                Row(
-                    modifier = Modifier.constrainAs(row) {
-                        top.linkTo(textFieldPassword.bottom, margin = 10.dp)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    }
-                ) {
-                    Button(
-                        onClick = {
-                            navController.navigate(Routes.AppRoute.route) {
-                                popUpTo(Routes.AuthRoute.route) {
-                                    inclusive = false
-                                }
-                                launchSingleTop = true
-                                restoreState = true
+
+                SimpleTextField(label = "E-Mail", modifier = Modifier.padding(bottom = 10.dp, top = 20.dp))
+                SimpleTextField(label = "Heslo", modifier = Modifier.padding(bottom = 10.dp))
+
+                Button(
+                    onClick = {
+                        navController.navigate(Routes.AppRoute.route) {
+                            popUpTo(Routes.AuthRoute.route) {
+                                inclusive = false
                             }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                    ) {
-                        Text(text = "Login")
-                    }
-
-                    Button(
-                        onClick = {
-                            navController.navigate(AuthScreens.Register.route)
-                        },
-                    ) {
-                        Text(text = "Register")
-                    }
-
+                    },
+                ) {
+                    Text(text = "Login")
                 }
 
-            }
+                Text(
+                    text = "Nemáte založený účet ?",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    textAlign = TextAlign.Center,
+                    fontSize = 15.sp,
+                    modifier = Modifier.padding(top = 16.dp),
+                )
 
+                Button(
+                    onClick = {
+                        navController.navigate(AuthScreens.Register.route)
+                    },
+                ) {
+                    Text(text = "Register")
+                }
+            }
 
         }
     }
-
 }
 
 @Composable
@@ -140,6 +113,6 @@ fun SimpleTextField(label: String, modifier: Modifier) {
     TextField(modifier = modifier,
         value = text,
         onValueChange = { text = it },
-        label = { Text(text = label) }
+        label = { Text(text = label) },
     )
 }

@@ -7,11 +7,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.DrawerValue
@@ -37,7 +37,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.bikezone.navigation.Screens
-import com.example.bikezone.ui.theme.DarkPrimary
 import com.example.bikezone.ui.theme.fontFamily
 import kotlinx.coroutines.launch
 
@@ -61,63 +60,69 @@ fun BikeZoneApp(
             gesturesEnabled = true,
             drawerContent = {
                 ModalDrawerSheet {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(DarkPrimary)
-                            .height(180.dp)
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.logo),
-                            contentDescription = "logoImage", // popis obsahu môžete nastaviť podľa potreby
-                            modifier = Modifier.fillMaxSize(),// aby sa obrázok vyplnil celý obsah boxu
-                            contentScale = ContentScale.Fit // prispôsobte podľa vašich požiadaviek na škálovanie
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(20.dp).fillMaxWidth().background(color = MaterialTheme.colorScheme.background))
-                    Column(
-                        Modifier
-                            .fillMaxSize()
-                            .background(
-                                MaterialTheme.colorScheme.background
-                            )
-                    ) {
-                        drawerScreens.forEach { screen ->
-                            NavigationDrawerItem(
-                                label = {
-                                    Text(
-                                        text = screen.title,
-                                        color = MaterialTheme.colorScheme.onSurface,
-                                    )
-                                },
-                                selected = screen.route == currentScreen.value,
-                                icon = {
-                                    Icon(
-                                        imageVector = if (screen.route == currentScreen.value) {
-                                            screen.selectedIcon
-                                        } else screen.unselectedIcon,
-                                        contentDescription = "${screen.title} icon",
-                                        tint = MaterialTheme.colorScheme.onSecondary
-                                    )
-                                },
-                                onClick = {
-                                    coroutineScope.launch {
-                                        drawerState.close()
-                                    }
-                                    navController.navigate(screen.route) {
-                                        popUpTo(Screens.Home.route) {
-                                            saveState = true
-                                        }
-                                        launchSingleTop = true
-                                        restoreState = true
-                                    }
-                                    currentScreen.value = screen.route
-
-                                },
-                                modifier = Modifier.padding(5.dp)
-                            )
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(180.dp)
+                                    .padding(bottom = 20.dp)
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.logo),
+                                    contentDescription = "logoImage",
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Fit
+                                )
+                            }
                         }
 
+
+                        item {
+                            Column(
+                                Modifier
+                                    .fillMaxSize()
+                                    .background(MaterialTheme.colorScheme.background)
+                            ) {
+                                drawerScreens.forEach { screen ->
+                                    NavigationDrawerItem(
+                                        label = {
+                                            Text(
+                                                text = screen.title,
+                                                color = MaterialTheme.colorScheme.onSurface,
+                                            )
+                                        },
+                                        selected = screen.route == currentScreen.value,
+                                        icon = {
+                                            Icon(
+                                                imageVector = if (screen.route == currentScreen.value) {
+                                                    screen.selectedIcon
+                                                } else screen.unselectedIcon,
+                                                contentDescription = "${screen.title} icon",
+                                                tint = MaterialTheme.colorScheme.onSecondary
+                                            )
+                                        },
+                                        onClick = {
+                                            coroutineScope.launch {
+                                                drawerState.close()
+                                            }
+                                            navController.navigate(screen.route) {
+                                                popUpTo(Screens.Home.route) {
+                                                    saveState = true
+                                                }
+                                                launchSingleTop = true
+                                                restoreState = true
+                                            }
+                                            currentScreen.value = screen.route
+                                        },
+                                        modifier = Modifier.padding(5.dp)
+                                    )
+                                }
+                            }
+
+                        }
                     }
 
                 }
@@ -168,7 +173,7 @@ fun BikeZoneApp(
                                         fontFamily = fontFamily,
                                         color = MaterialTheme.colorScheme.onSurface,
 
-                                    )
+                                        )
                                 },
                                 selected = screen.route == currentScreen.value,
                                 onClick = {
