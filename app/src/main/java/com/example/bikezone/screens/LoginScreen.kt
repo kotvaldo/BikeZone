@@ -4,28 +4,37 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,6 +47,16 @@ import com.example.bikezone.ui.theme.DarkPrimary
 
 @Composable
 fun LoginScreen(navController: NavController) {
+    val (email, setEmail) = rememberSaveable {
+        mutableStateOf("")
+    }
+    val (password, setPassword) = rememberSaveable {
+        mutableStateOf("")
+    }
+    val (checked, onCheckedChange) = rememberSaveable {
+        mutableStateOf(false)
+    }
+
     BikeZoneTheme {
         Box(
             modifier = Modifier
@@ -52,7 +71,7 @@ fun LoginScreen(navController: NavController) {
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.logo),
-                    contentDescription = stringResource(id = R.string.str_logo_image) ,
+                    contentDescription = stringResource(id = R.string.str_logo_image),
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight(0.3f) // Nastavenie výšky obrázku
@@ -69,9 +88,33 @@ fun LoginScreen(navController: NavController) {
                     modifier = Modifier.padding(vertical = 16.dp)
                 )
 
-                SimpleTextField(label = stringResource(id = R.string.str_email), modifier = Modifier.padding(bottom = 10.dp, top = 20.dp))
-                SimpleTextField(label = stringResource(id = R.string.str_password), modifier = Modifier.padding(bottom = 10.dp))
+                AuthTextField(
+                    label = stringResource(id = R.string.str_email),
+                    modifier = Modifier.padding(bottom = 10.dp, top = 20.dp),
+                    value = email,
+                    onValueChange = setEmail,
+                    icon = Icons.Default.Person,
+                    keyboardType = KeyboardType.Email
 
+
+                )
+                AuthTextField(
+                    label = stringResource(id = R.string.str_password),
+                    modifier = Modifier.padding(bottom = 10.dp),
+                    value = password,
+                    onValueChange = setPassword,
+                    icon = Icons.Default.Lock,
+                    keyboardType = KeyboardType.Password,
+                    visualTransformation = PasswordVisualTransformation()
+                )
+                Row (verticalAlignment = Alignment.CenterVertically){
+                    Checkbox(
+                        checked = checked,
+                        onCheckedChange = onCheckedChange
+                    )
+                    Text(text = stringResource(id = R.string.str_remember), color = MaterialTheme.colorScheme.onSecondary)
+                }
+                
                 Button(
                     onClick = {
                         navController.navigate(Routes.AppRoute.route) {
@@ -108,12 +151,25 @@ fun LoginScreen(navController: NavController) {
 }
 
 @Composable
-fun SimpleTextField(label: String, modifier: Modifier) {
-    var text by remember { mutableStateOf(TextFieldValue()) }
+fun AuthTextField(
+    modifier: Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    icon: ImageVector? = null,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    visualTransformation: VisualTransformation = VisualTransformation.None
 
-    TextField(modifier = modifier,
-        value = text,
-        onValueChange = { text = it },
+) {
+
+    OutlinedTextField(
+        modifier = modifier,
+        value = value,
+        onValueChange = onValueChange,
         label = { Text(text = label) },
+        leadingIcon = { if (icon != null) Icon(imageVector = icon, contentDescription = "image") },
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+        visualTransformation = visualTransformation,
+        shape = RoundedCornerShape(20)
     )
 }

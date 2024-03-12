@@ -62,10 +62,10 @@ fun RegisterScreen(navController: NavController) {
                     modifier = Modifier.padding(vertical = 16.dp)
                 )
 
-                SimpleTextField(label = stringResource(id = R.string.str_login), modifier = Modifier.padding(bottom = 10.dp))
-                SimpleTextField(label = stringResource(id = R.string.str_email), modifier = Modifier.padding(bottom = 10.dp))
-                SimpleTextField(label = stringResource(id = R.string.str_password), modifier = Modifier.padding(bottom = 10.dp))
-                SimpleTextField(label = stringResource(id = R.string.str_address), modifier = Modifier.padding(bottom = 10.dp))
+                /*AuthTextField(value = stringResource(id = R.string.str_login), modifier = Modifier.padding(bottom = 10.dp))
+                AuthTextField(value = stringResource(id = R.string.str_email), modifier = Modifier.padding(bottom = 10.dp))
+                AuthTextField(value = stringResource(id = R.string.str_password), modifier = Modifier.padding(bottom = 10.dp))
+                AuthTextField(value = stringResource(id = R.string.str_address), modifier = Modifier.padding(bottom = 10.dp))*/
 
                 Button(
                     onClick = {
