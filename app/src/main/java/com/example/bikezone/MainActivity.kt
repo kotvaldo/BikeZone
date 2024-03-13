@@ -12,7 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.bikezone.navigation.Routes
 import com.example.bikezone.navigation.Screens
-import com.example.bikezone.navigation.SetupNavGraph
+import com.example.bikezone.navigation.graph.SetupNavGraph
 import com.example.bikezone.ui.theme.BikeZoneTheme
 
 class MainActivity : ComponentActivity() {

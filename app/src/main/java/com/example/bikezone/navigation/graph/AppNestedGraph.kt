@@ -1,9 +1,11 @@
-package com.example.bikezone.navigation
+package com.example.bikezone.navigation.graph
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.bikezone.navigation.Routes
+import com.example.bikezone.navigation.Screens
 import com.example.bikezone.screens.AboutScreen
 import com.example.bikezone.screens.CartScreen
 import com.example.bikezone.screens.HomeScreen
