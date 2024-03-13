@@ -6,6 +6,8 @@
     <string name="str_profile">Profil</string>
     <string name="str_login">Login</string>
     <string name="str_register">Register</string>
+    <string name="str_register_down">Registrovať sa</string>
+    <string name="str_name">Meno a priezvisko</string>
     <string name="str_email">E-Mail</string>
     <string name="str_password">Heslo</string>
     <string name="str_repeat_password">Zopakujte heslo</string>
@@ -14,4 +16,7 @@
     <string name="str_not_have_account">Nemáte založený účet ?</string>
     <string name="str_logo_image">LogoImage</string>
     <string name="str_remember">Zapamätať si ma ?</string>
+    <string name="str_terms_agree">Súhlasíte s podmienkami BikeZone ? </string>
+    <string name="str_password_not_match">Heslá sa nezhodujú </string>
+
 </resources>

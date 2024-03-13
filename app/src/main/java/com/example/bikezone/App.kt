@@ -32,12 +32,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.bikezone.navigation.Screens
+import com.example.bikezone.ui.theme.DarkPrimary
 import com.example.bikezone.ui.theme.fontFamily
 import kotlinx.coroutines.launch
 
@@ -67,7 +69,7 @@ fun BikeZoneApp(
                         item {
                             Box(
                                 modifier = Modifier
-                                    .fillMaxWidth()
+                                    .fillMaxWidth().background(DarkPrimary)
                                     .height(180.dp)
                                     .padding(bottom = 20.dp)
                             ) {
@@ -156,7 +158,7 @@ fun BikeZoneApp(
                     )
                 }, bottomBar = {
                     NavigationBar(
-                        modifier = Modifier.background(color = MaterialTheme.colorScheme.background)
+                        modifier = Modifier.background(color = Color.Black),
                     ) {
                         bottomNavBarScreens.forEach { screen ->
                             NavigationBarItem(

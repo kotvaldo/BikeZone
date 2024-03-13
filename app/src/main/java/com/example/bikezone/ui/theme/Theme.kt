@@ -18,28 +18,28 @@ import androidx.core.view.WindowCompat
 
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color.White,  // Nastavte primárnu farbu na čiernu
+    primary = DarkPrimary, // Nastavte primárnu farbu na čiernu
     secondary = DarkPrimary,  // Nastavte sekundárnu farbu na tmavo šedú
-    tertiary = DarkPrimary,  // Nastavte terciárnu farbu na šedú
+    tertiary = LightPrimary,  // Nastavte terciárnu farbu na šedú
     background = DarkPrimary, // Nastavte farbu pozadia na čiernu
     surface = DarkPrimary,  // Nastavte farbu povrchu na čiernu
-    onPrimary = Color.Black,  // Nastavte farbu textu na primárnej farbe na bielu
+    onPrimary = Color.White,  // Nastavte farbu textu na primárnej farbe na bielu
     onSecondary = Color.White,  // Nastavte farbu textu na sekundárnej farbe na bielu
-    onTertiary = Color.White,  // Nastavte farbu textu na terciárnej farbe na bielu
+    onTertiary = Color.Black,  // Nastavte farbu textu na terciárnej farbe na bielu
     onBackground = Color.White,  // Nastavte farbu textu na pozadí na bielu
     onSurface = Color.White,  // Nastavte farbu textu na povrchu na bielu
     // Môžete nastaviť aj ďalšie farby podľa potreby
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = DarkPrimary,
+    primary = LightPrimary,
     secondary = LightPrimary,
-    tertiary = LightPrimary,
+    tertiary = DarkPrimary,
     background = LightPrimary,
     surface = LightPrimary,
-    onPrimary = Color.White,
+    onPrimary = Color.Black,
     onSecondary = Color.Black,
-    onTertiary = Color.Black,
+    onTertiary = Color.White,
     onBackground = Color.Black,
     onSurface = Color.Black,
 
