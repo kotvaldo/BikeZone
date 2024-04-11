@@ -10,5 +10,6 @@ data class User(
     @ColumnInfo(name = "name") val name: String? = "",
     @ColumnInfo(name = "email") val email: String? = "",
     @ColumnInfo(name = "password") val password: String? = "",
-    @ColumnInfo(name = "address") val address: String? = ""
+    @ColumnInfo(name = "address") val address: String? = "",
+    @ColumnInfo(name = "auth") val auth:Boolean = false
 )

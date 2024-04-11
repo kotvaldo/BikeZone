@@ -1,5 +1,6 @@
-package com.example.bikezone.screens
+package com.example.bikezone.ui.screens
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,18 +17,25 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -41,25 +49,44 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.bikezone.R
-import com.example.bikezone.components.AuthTextField
 import com.example.bikezone.navigation.AuthScreens
-import com.example.bikezone.navigation.Routes
+import com.example.bikezone.ui.components.CustomTextField
 import com.example.bikezone.ui.theme.BikeZoneTheme
 import com.example.bikezone.ui.theme.CustomRed
 import com.example.bikezone.ui.theme.DarkPrimary
 
 @ExperimentalMaterial3Api
 @Composable
-fun LoginScreen(navController: NavController) {
+fun RegisterScreen(navController: NavController) {
+    val (name, setName) = rememberSaveable {
+        mutableStateOf("")
+    }
     val (email, setEmail) = rememberSaveable {
         mutableStateOf("")
     }
     val (password, setPassword) = rememberSaveable {
         mutableStateOf("")
     }
+    val (repeatPasswd, setRepeatPasswd) = rememberSaveable {
+        mutableStateOf("")
+    }
+    val (address, setAddress) = rememberSaveable {
+        mutableStateOf("")
+    }
 
+    val (checked, onCheckedChange) = rememberSaveable {
+        mutableStateOf(false)
+    }
 
-    val isFieldsEmpty = email.isNotEmpty() && password.isNotEmpty()
+    LocalContext.current
+
+    var isPasswordSame by remember {
+        mutableStateOf(false)
+    }
+    val isFieldsNotEmpty = name.isNotEmpty() && email.isNotEmpty() &&
+            password.isNotEmpty() && repeatPasswd.isNotEmpty() &&
+            address.isNotEmpty() && checked
+
     BikeZoneTheme {
         Box(
             modifier = Modifier
@@ -77,33 +104,45 @@ fun LoginScreen(navController: NavController) {
                     contentDescription = stringResource(id = R.string.str_logo_image),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .fillMaxHeight(0.3f) // Nastavenie výšky obrázku
+                        .fillMaxHeight(0.1f) // Nastavenie výšky obrázku
                         .background(DarkPrimary),
                     contentScale = ContentScale.Fit
                 )
-
+                AnimatedVisibility(isPasswordSame) {
+                    Text(
+                        text = stringResource(id = R.string.str_password_not_match),
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
                 Text(
-                    text = stringResource(id = R.string.str_login),
+                    text = stringResource(id = R.string.str_register),
                     color = MaterialTheme.colorScheme.onBackground,
                     textAlign = TextAlign.Center,
                     fontSize = 35.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(vertical = 16.dp)
                 )
+                CustomTextField(
+                    label = stringResource(id = R.string.str_name),
+                    modifier = Modifier
+                        .padding(bottom = 10.dp)
+                        .fillMaxWidth(0.8f),
+                    value = name,
+                    onValueChange = setName,
+                    icon = Icons.Default.Person
 
-                AuthTextField(
+                )
+                CustomTextField(
                     label = stringResource(id = R.string.str_email),
                     modifier = Modifier
-                        .padding(bottom = 10.dp, top = 20.dp)
+                        .padding(bottom = 10.dp)
                         .fillMaxWidth(0.8f),
                     value = email,
                     onValueChange = setEmail,
                     icon = Icons.Default.Email,
-                    keyboardType = KeyboardType.Email
-
-
+                    keyboardType = KeyboardType.Email,
                 )
-                AuthTextField(
+                CustomTextField(
                     label = stringResource(id = R.string.str_password),
                     modifier = Modifier
                         .padding(bottom = 10.dp)
@@ -114,29 +153,62 @@ fun LoginScreen(navController: NavController) {
                     keyboardType = KeyboardType.Password,
                     visualTransformation = PasswordVisualTransformation()
                 )
-
+                CustomTextField(
+                    label = stringResource(id = R.string.str_repeat_password),
+                    modifier = Modifier
+                        .padding(bottom = 10.dp)
+                        .fillMaxWidth(0.8f),
+                    value = repeatPasswd,
+                    onValueChange = setRepeatPasswd,
+                    keyboardType = KeyboardType.Password,
+                    visualTransformation = PasswordVisualTransformation(),
+                    icon = Icons.Default.Lock
+                )
+                CustomTextField(
+                    label = stringResource(id = R.string.str_address),
+                    modifier = Modifier
+                        .padding(bottom = 10.dp)
+                        .fillMaxWidth(0.8f),
+                    value = address,
+                    onValueChange = setAddress,
+                    icon = Icons.Default.Home
+                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(
+                        checked = checked,
+                        onCheckedChange = onCheckedChange
+                    )
+                    Text(
+                        text = stringResource(id = R.string.str_terms_agree),
+                        color = MaterialTheme.colorScheme.onSecondary
+                    )
+                }
                 Button(
-                    enabled = isFieldsEmpty,
+                    enabled = isFieldsNotEmpty,
                     onClick = {
-                        navController.navigate(Routes.AppRoute.route) {
-                            popUpTo(Routes.AuthRoute.route) {
-                                inclusive = true
+                        isPasswordSame = password != repeatPasswd
+                        if(!isPasswordSame) {
+                            navController.navigate(AuthScreens.Login.route) {
+                                popUpTo(AuthScreens.Login.route) {
+                                    inclusive = true
+                                }
+                                launchSingleTop = true
+
                             }
-                            launchSingleTop = true
-                            restoreState = true
                         }
+
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.tertiary,
-                        contentColor = MaterialTheme.colorScheme.onTertiary
-                    )
+                        contentColor = MaterialTheme.colorScheme.onTertiary)
                 ) {
-                    Text(text = stringResource(id = R.string.str_login))
+                    Text(text = stringResource(id = R.string.str_register))
                 }
+
                 Spacer(modifier = Modifier.height(50.dp))
                 Row {
-                    val signUpOther = stringResource(id = R.string.str_not_have_account)
-                    val signUp = stringResource(id = R.string.str_register_down)
+                    val signUpOther = stringResource(id = R.string.str_already_registered)
+                    val signUp = stringResource(id = R.string.str_login)
                     val annotatedString = buildAnnotatedString {
                         withStyle(SpanStyle(color = MaterialTheme.colorScheme.onPrimary)) {
                             append(signUpOther)
@@ -144,7 +216,7 @@ fun LoginScreen(navController: NavController) {
                         append("  ")
                         withStyle(
                             SpanStyle(color = CustomRed, fontWeight = FontWeight.Bold, fontSize = 15.sp)
-                            ) {
+                        ) {
                             pushStringAnnotation(tag = signUp, signUp)
                             append(signUp)
                         }
@@ -156,9 +228,9 @@ fun LoginScreen(navController: NavController) {
                         annotatedString.getStringAnnotations(offset, offset).forEach {
                             when (it.tag) {
                                 signUp -> {
-                                    navController.navigate(AuthScreens.Register.route) {
+                                    navController.navigate(AuthScreens.Login.route) {
                                         popUpTo(AuthScreens.Login.route) {
-                                            inclusive = false
+                                            inclusive = true
                                         }
                                         launchSingleTop = true
                                     }

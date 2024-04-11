@@ -1,4 +1,4 @@
-package com.example.bikezone.components
+package com.example.bikezone.ui.components
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,7 +16,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 
 @ExperimentalMaterial3Api
 @Composable
-fun AuthTextField(
+fun CustomTextField(
     modifier: Modifier,
     value: String,
     onValueChange: (String) -> Unit,
