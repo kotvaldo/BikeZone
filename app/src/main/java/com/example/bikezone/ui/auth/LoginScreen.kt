@@ -25,9 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -43,14 +40,13 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.bikezone.R
-import com.example.bikezone.ui.components.CustomTextField
 import com.example.bikezone.navigation.LoginDestination
 import com.example.bikezone.navigation.RegisterDestination
 import com.example.bikezone.navigation.Routes
 import com.example.bikezone.ui.AppViewModelProvider
+import com.example.bikezone.ui.components.CustomTextField
 import com.example.bikezone.ui.theme.BikeZoneTheme
 import com.example.bikezone.ui.theme.CustomRed
 import com.example.bikezone.ui.theme.DarkPrimary
@@ -59,10 +55,9 @@ import com.example.bikezone.ui.theme.DarkPrimary
 @Composable
 fun LoginScreen(
     navController: NavHostController,
+    viewModel: LoginViewModel = viewModel(factory = AppViewModelProvider.Factory)
     ) {
-    val viewModel: LoginViewModel = viewModel(factory = AppViewModelProvider.Factory)
     val loginUiState by viewModel.loginUiState.collectAsState()
-    val coroutineScope = rememberCoroutineScope()
 
     BikeZoneTheme {
         Box(
