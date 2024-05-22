@@ -4,11 +4,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface ItemRepository {
 
-    fun getAllItemsStream(): Flow<List<Item>>
+   suspend fun getAllItemsStream(): Flow<List<Item>>
 
 
     fun getItemByIdStream(id: Int): Flow<Item?>
-    fun getItemsBySubString(subString : String): Flow<List<Item>>
+    suspend fun getItemsBySubString(subString : String): Flow<List<Item>>
 
     suspend fun insertItem(item: Item)
 

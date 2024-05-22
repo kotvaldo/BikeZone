@@ -8,12 +8,12 @@ import com.example.bikezone.navigation.Routes
 
 @Composable
 fun BikeZoneNavHost(
-    navController: NavHostController, user: User? = null
+    navController: NavHostController //, user: User? = null
 ) {
-    val startDestination = if (user == null) Routes.AuthRoute.route else Routes.AppRoute.route
+ //   val startDestination = if (user == null) Routes.AuthRoute.route else Routes.AppRoute.route
     NavHost(
         navController = navController,
-        startDestination = startDestination,
+        startDestination = Routes.AuthRoute.route,
     ) {
         setupAuthGraph(navController)
         setupAppGraph(navController)

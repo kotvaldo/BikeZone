@@ -35,7 +35,7 @@ import com.example.bikezone.navigation.graph.BikeZoneNavHost
 
 @Composable
 fun BikeZoneApp(navController: NavHostController = rememberNavController()) {
-    BikeZoneNavHost(navController = navController, user = null)
+    BikeZoneNavHost(navController = navController) //, user = null)
 }
 
 

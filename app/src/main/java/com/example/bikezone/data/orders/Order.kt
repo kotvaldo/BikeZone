@@ -12,7 +12,7 @@ import com.example.bikezone.data.users.User
 ])
 data class Order(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "order_id") val id: Int = 0,
-    @ColumnInfo(name = "price") val price: Float = 0.0f,
-    @ColumnInfo(name = "item_count") val count:Int = 0,
+    @ColumnInfo(name = "price") val price: Float,
+    @ColumnInfo(name = "item_count") val count:Int,
     @ColumnInfo(name = "user_id") val userId:Int,
 )

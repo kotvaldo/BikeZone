@@ -47,10 +47,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.bikezone.R
 import com.example.bikezone.navigation.LoginDestination
+import com.example.bikezone.ui.AppViewModelProvider
 import com.example.bikezone.ui.components.CustomTextField
 import com.example.bikezone.ui.theme.BikeZoneTheme
 import com.example.bikezone.ui.theme.CustomRed
@@ -58,7 +61,9 @@ import com.example.bikezone.ui.theme.DarkPrimary
 
 @ExperimentalMaterial3Api
 @Composable
-fun RegisterScreen(navController: NavHostController) {
+fun RegisterScreen(
+    navController: NavHostController,
+) {
     val (name, setName) = rememberSaveable {
         mutableStateOf("")
     }
@@ -188,7 +193,7 @@ fun RegisterScreen(navController: NavHostController) {
                     enabled = isFieldsNotEmpty,
                     onClick = {
                         isPasswordSame = password != repeatPasswd
-                        if(!isPasswordSame) {
+                        if (!isPasswordSame) {
                             navController.navigate(LoginDestination.route) {
                                 popUpTo(LoginDestination.route) {
                                     inclusive = true
@@ -201,7 +206,8 @@ fun RegisterScreen(navController: NavHostController) {
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.tertiary,
-                        contentColor = MaterialTheme.colorScheme.onTertiary)
+                        contentColor = MaterialTheme.colorScheme.onTertiary
+                    )
                 ) {
                     Text(text = stringResource(id = R.string.str_register))
                 }
@@ -216,7 +222,11 @@ fun RegisterScreen(navController: NavHostController) {
                         }
                         append("  ")
                         withStyle(
-                            SpanStyle(color = CustomRed, fontWeight = FontWeight.Bold, fontSize = 15.sp)
+                            SpanStyle(
+                                color = CustomRed,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 15.sp
+                            )
                         ) {
                             pushStringAnnotation(tag = signUp, signUp)
                             append(signUp)
