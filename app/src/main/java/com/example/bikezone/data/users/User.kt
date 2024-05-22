@@ -1,4 +1,4 @@
-package com.example.bikezone.data.models
+package com.example.bikezone.data.users
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
