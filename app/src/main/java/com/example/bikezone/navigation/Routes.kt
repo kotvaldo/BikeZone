@@ -4,10 +4,10 @@ sealed class Routes(
     val route: String
 ) {
     data object AuthRoute : Routes(
-        route = "Auth"
+        route = "auth"
     )
 
     data object AppRoute : Routes(
-        route = "App"
+        route = "app"
     )
 }

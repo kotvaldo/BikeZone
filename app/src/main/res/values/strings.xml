@@ -18,5 +18,7 @@
     <string name="str_remember">Zapamätať si ma ?</string>
     <string name="str_terms_agree">Súhlasíte s podmienkami BikeZone ? </string>
     <string name="str_password_not_match">Heslá sa nezhodujú </string>
+    <string name="cd_nav_back">navBack</string>
+    <string name="str_order">Orders</string>
 
 </resources>

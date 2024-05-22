@@ -1,9 +1,10 @@
-package com.example.bikezone.data.models
+package com.example.bikezone.data.items
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.example.bikezone.data.models.Category
 
 
 @Entity(tableName = "items", foreignKeys = [

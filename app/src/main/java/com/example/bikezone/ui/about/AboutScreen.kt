@@ -1,0 +1,48 @@
+package com.example.bikezone.ui.about
+
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.bikezone.BikeZoneBottomAppBar
+import com.example.bikezone.BikeZoneTopAppBar
+import com.example.bikezone.R
+import com.example.bikezone.ui.home.HomeLayout
+import com.example.bikezone.ui.theme.BikeZoneTheme
+
+@Composable
+fun AboutScreen(navController: NavHostController) {
+   BikeZoneTheme {
+      Scaffold(
+         topBar = {
+            BikeZoneTopAppBar(
+               title = R.string.str_about,
+               canNavigateBack = true,
+               navigateBack = {navController.popBackStack()},
+               modifier = Modifier
+            )
+         },
+         bottomBar = {
+            BikeZoneBottomAppBar(
+               navController = navController
+            )
+         },
+         content = { innerPadding ->
+            AboutLayout(
+               contentPadding = innerPadding
+            )
+         })
+   }
+}
+
+@Composable
+fun AboutLayout(
+   contentPadding: PaddingValues = PaddingValues(0.dp)
+) {
+
+}
