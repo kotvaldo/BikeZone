@@ -28,9 +28,6 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
     var passwordInput by mutableStateOf("")
         private set
 
-    companion object {
-        private const val TIMEOUT_MILLIS = 5_000L
-    }
 
     fun updateEmail(email: String) {
         emailInput = email
