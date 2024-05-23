@@ -218,7 +218,7 @@ fun RegisterInputForm(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
                 checked = termsAccepted,
-                onCheckedChange = onTermsAcceptedChange
+                onCheckedChange = { onTermsAcceptedChange(!termsAccepted) }
             )
             Text(
                 text = stringResource(id = R.string.str_terms_agree),

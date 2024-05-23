@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bikezone.data.users.User
-import com.example.bikezone.data.users.UserDetails
 import com.example.bikezone.data.users.UserRepository
 import kotlinx.coroutines.launch
 
@@ -45,7 +44,7 @@ class RegisterViewModel(private val userRepository: UserRepository) : ViewModel(
     fun updateStateTermsAccept(termsAccepted: Boolean) {
         registerUiState = RegisterState(
             userDetails = registerUiState.userDetails,
-            termsAccepted = !registerUiState.termsAccepted,
+            termsAccepted = termsAccepted,
             isPasswordSame = registerUiState.isPasswordSame,
             alreadyExist = registerUiState.alreadyExist,
             isFieldsNotEmpty = registerUiState.isFieldsNotEmpty

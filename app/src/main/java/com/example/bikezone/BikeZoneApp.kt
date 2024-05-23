@@ -4,7 +4,6 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,7 +32,6 @@ import com.example.bikezone.navigation.OrderDestination
 import com.example.bikezone.navigation.ProfileDestination
 import com.example.bikezone.navigation.graph.BikeZoneNavHost
 import com.example.bikezone.ui.AppViewModelProvider
-import com.example.bikezone.ui.auth.LoginViewModel
 
 
 @Composable

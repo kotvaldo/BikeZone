@@ -3,7 +3,6 @@ package com.example.bikezone.navigation.graph
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.example.bikezone.data.users.User
 import com.example.bikezone.navigation.Routes
 
 @Composable

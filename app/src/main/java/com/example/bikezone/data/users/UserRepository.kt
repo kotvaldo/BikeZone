@@ -1,6 +1,5 @@
 package com.example.bikezone.data.users
 
-import com.example.bikezone.data.items.Item
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
