@@ -32,5 +32,10 @@
     <string name="str_want_to_delete">Naozaj chcete vymazať účet?</string>
     <string name="str_yes">Áno</string>
     <string name="str_no">Nie</string>
+    <string name="str_bike1">CTM WIRE 2024</string>
+    <string name="str_bike2">CTM WIRE XPERT 2024</string>
+    <string name="str_bike3">CTM WIRE PRO 2024</string>
+    <string name="str_bike4">KELLYS SOOT 20 2023</string>
+
 
 </resources>

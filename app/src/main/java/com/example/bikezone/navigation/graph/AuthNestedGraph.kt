@@ -1,8 +1,6 @@
 package com.example.bikezone.navigation.graph
 
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -16,7 +14,7 @@ import com.example.bikezone.ui.auth.RegisterScreen
 @OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.setupAuthGraph(navController: NavHostController) {
 
-    navigation(startDestination = LoginDestination.route, route = Routes.AuthRoute.route) {
+    navigation(startDestination = LoginDestination .route, route = Routes.AuthRoute.route) {
         composable(
             route = LoginDestination.route
         ) {

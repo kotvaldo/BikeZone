@@ -15,4 +15,5 @@ data class Order(
     @ColumnInfo(name = "price") val price: Float,
     @ColumnInfo(name = "item_count") val count:Int,
     @ColumnInfo(name = "user_id") val userId:Int,
+
 )

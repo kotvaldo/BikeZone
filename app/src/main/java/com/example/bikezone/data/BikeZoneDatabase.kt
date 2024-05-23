@@ -23,7 +23,7 @@ abstract class BikeZoneDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     BikeZoneDatabase::class.java,
-                    "bikezone_database"
+                    "bikezone_dtb"
                 ).build()
                 INSTANCE = instance
                 instance
