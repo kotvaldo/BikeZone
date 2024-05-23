@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ItemRepository {
 
-   suspend fun getAllItemsStream(): Flow<List<Item>>
+    fun getAllItemsStream(): Flow<List<Item>>
 
 
     fun getItemByIdStream(id: Int): Flow<Item?>

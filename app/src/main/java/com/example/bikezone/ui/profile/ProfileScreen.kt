@@ -2,6 +2,7 @@ package com.example.bikezone.ui.profile
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
@@ -32,6 +35,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -198,14 +203,25 @@ fun ProfileLayout(
     onSignOutClick: () -> Unit = {},
     isFieldsNotEmpty: Boolean
 ) {
+    val scrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(contentPadding)
-            .padding(16.dp),
+            .padding(16.dp)
+            .verticalScroll(scrollState),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Image(
+            painter = painterResource(R.drawable.profile_picture),
+            contentDescription = null,
+            modifier = Modifier
+                .height(100.dp)
+                .fillMaxWidth(),
+            contentScale = ContentScale.Fit
+        )
         Text(
             text = stringResource(id = R.string.str_change_profile),
             color = MaterialTheme.colorScheme.onBackground,
@@ -275,6 +291,8 @@ fun ProfileLayout(
         ) {
             Text(text = stringResource(id = R.string.str_submit_changes))
         }
+
+        Spacer(modifier = Modifier.height(40.dp))
         Button(
             enabled = true,
             onClick = onSignOutClick,
@@ -285,11 +303,6 @@ fun ProfileLayout(
         ) {
             Text(text = stringResource(id = R.string.str_sign_out))
         }
-        Spacer(
-            modifier = Modifier
-                .height(20.dp)
-                .fillMaxWidth()
-        )
         Button(
             enabled = true,
             onClick = onDeleteClick,
@@ -297,8 +310,7 @@ fun ProfileLayout(
                 containerColor = MaterialTheme.colorScheme.tertiary,
                 contentColor = MaterialTheme.colorScheme.onTertiary
             ),
-
-            ) {
+        ) {
             Text(text = stringResource(id = R.string.str_delete_account))
         }
     }

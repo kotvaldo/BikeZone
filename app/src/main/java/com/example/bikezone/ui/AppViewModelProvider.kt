@@ -8,6 +8,7 @@ import com.example.bikezone.AuthViewModel
 import com.example.bikezone.BikeZoneApplication
 import com.example.bikezone.ui.auth.LoginViewModel
 import com.example.bikezone.ui.auth.RegisterViewModel
+import com.example.bikezone.ui.home.HomeViewModel
 import com.example.bikezone.ui.profile.ProfileViewModel
 
 object AppViewModelProvider {
@@ -25,6 +26,9 @@ object AppViewModelProvider {
         }
         initializer {
             ProfileViewModel(application().container.userRepository)
+        }
+        initializer {
+            HomeViewModel(application().container.itemRepository)
         }
     }
 }

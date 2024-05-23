@@ -3,7 +3,7 @@ package com.example.bikezone.data.items
 import kotlinx.coroutines.flow.Flow
 
 class OfflineItemRepozitory(private val itemDao: ItemDao) : ItemRepository {
-    override suspend fun getAllItemsStream(): Flow<List<Item>> = itemDao.getAllItems()
+    override fun getAllItemsStream(): Flow<List<Item>> = itemDao.getAllItems()
 
     override fun getItemByIdStream(id: Int): Flow<Item?>  = itemDao.getItemById(id)
 
