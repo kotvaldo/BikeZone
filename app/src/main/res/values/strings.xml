@@ -6,6 +6,10 @@
     <string name="str_profile">Profil</string>
     <string name="str_login">Login</string>
     <string name="str_register">Register</string>
+    <string name="str_delete_account">Vymazať účet</string>
+    <string name="str_submit_changes">Aktualizovať</string>
+    <string name="str_change_profile">Zmeniť údaje</string>
+    <string name="str_sign_out">Odhlásiť sa</string>
     <string name="str_register_down">Registrovať sa</string>
     <string name="str_name">Meno a priezvisko</string>
     <string name="str_email">E-Mail</string>
@@ -13,6 +17,7 @@
     <string name="str_repeat_password">Zopakujte heslo</string>
     <string name="str_address">Adresa</string>
     <string name="str_already_registered">Už bol vytvorený účet s rovnakým emailom</string>
+    <string name="str_already_used">Email už bol použitý</string>
     <string name="str_not_have_account">Nemáte založený účet ?</string>
     <string name="str_logo_image">LogoImage</string>
     <string name="str_remember">Zapamätať si ma ?</string>
@@ -21,5 +26,11 @@
     <string name="str_aldready_exist">Účet už existuje, prihláste sa</string>
     <string name="cd_nav_back">navBack</string>
     <string name="str_order">Orders</string>
+    <string name="str_success_update">Aktualizácia prebehla úspešne</string>
+    <string name="str_want_to_sign_out">Naozaj sa chcete odhlásiť?</string>
+    <string name="str_sign_out_account">Odhlásenie</string>
+    <string name="str_want_to_delete">Naozaj chcete vymazať účet?</string>
+    <string name="str_yes">Áno</string>
+    <string name="str_no">Nie</string>
 
 </resources>

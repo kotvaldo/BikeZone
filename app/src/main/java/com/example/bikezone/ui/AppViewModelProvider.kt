@@ -8,6 +8,7 @@ import com.example.bikezone.AuthViewModel
 import com.example.bikezone.BikeZoneApplication
 import com.example.bikezone.ui.auth.LoginViewModel
 import com.example.bikezone.ui.auth.RegisterViewModel
+import com.example.bikezone.ui.profile.ProfileViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
@@ -21,6 +22,9 @@ object AppViewModelProvider {
 
         initializer {
             AuthViewModel(application().container.userRepository)
+        }
+        initializer {
+            ProfileViewModel(application().container.userRepository)
         }
     }
 }
