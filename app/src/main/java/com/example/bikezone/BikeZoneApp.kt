@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -31,11 +32,15 @@ import com.example.bikezone.navigation.HomeDestination
 import com.example.bikezone.navigation.OrderDestination
 import com.example.bikezone.navigation.ProfileDestination
 import com.example.bikezone.navigation.graph.BikeZoneNavHost
+import com.example.bikezone.ui.AppViewModelProvider
+import com.example.bikezone.ui.auth.LoginViewModel
 
 
 @Composable
 fun BikeZoneApp(navController: NavHostController = rememberNavController()) {
-    BikeZoneNavHost(navController = navController) //, user = null)
+    val viewModel: AuthViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel.checkUserWithAuth()
+    BikeZoneNavHost(navController = navController, viewModel.userWithAuth)
 }
 
 

@@ -27,8 +27,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -52,6 +51,7 @@ import com.example.bikezone.ui.components.CustomTextField
 import com.example.bikezone.ui.theme.BikeZoneTheme
 import com.example.bikezone.ui.theme.CustomRed
 import com.example.bikezone.ui.theme.DarkPrimary
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,7 +60,7 @@ fun RegisterScreen(
     navController: NavHostController,
     viewModel: RegisterViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-
+    val coroutineScope = rememberCoroutineScope()
     BikeZoneTheme {
         Box(
             modifier = Modifier
@@ -68,12 +68,24 @@ fun RegisterScreen(
                 .background(MaterialTheme.colorScheme.background),
         ) {
             RegisterBody(
-                onRegisterClick = {  },
+                onRegisterClick = {
+                    viewModel.verifyAlreadyExistAccount()
+                    if (!viewModel.registerUiState.alreadyExist) {
+                        coroutineScope.launch {
+                            viewModel.saveItem()
+                            navController.navigate(LoginDestination.route)
+                        }
+
+                    }
+                },
                 navController = navController,
                 onValueChange = viewModel::updateUiState,
                 registerState = viewModel.registerUiState,
-                onTermsAcceptedChange = viewModel::updateStateTermsAccept
-                )
+                onTermsAcceptedChange = viewModel::updateStateTermsAccept,
+                isFieldsNotEmpty = viewModel.verifyIsFieldsNotEmpty() && viewModel.verifyTermsAccepted(),
+                alreadyExist = viewModel.registerUiState.alreadyExist
+
+            )
         }
     }
 }
@@ -86,6 +98,8 @@ fun RegisterBody(
     registerState: RegisterState,
     onTermsAcceptedChange: ((Boolean) -> Unit),
     onValueChange: (RegisterUserDetails) -> Unit,
+    isFieldsNotEmpty: Boolean,
+    alreadyExist: Boolean
 ) {
     RegisterInputForm(
         isPasswordSame = registerState.isPasswordSame,
@@ -93,10 +107,11 @@ fun RegisterBody(
         navController = navController,
         termsAccepted = registerState.termsAccepted,
         onTermsAcceptedChange = onTermsAcceptedChange,
-        isFieldsNotEmpty = registerState.isFieldsNotEmpty
-    ) {
-
-    }
+        isFieldsNotEmpty = isFieldsNotEmpty,
+        onValueChange = onValueChange,
+        onRegisterClick = onRegisterClick,
+        alreadyExist = alreadyExist
+    )
 }
 
 
@@ -104,6 +119,7 @@ fun RegisterBody(
 @Composable
 fun RegisterInputForm(
     isPasswordSame: Boolean,
+    alreadyExist: Boolean,
     userDetails: RegisterUserDetails,
     modifier: Modifier = Modifier,
     onValueChange: (RegisterUserDetails) -> Unit = {},
@@ -115,7 +131,7 @@ fun RegisterInputForm(
 ) {
 
     Column(
-        modifier = Modifier
+        modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()), // Pridanie posúvateľnosti
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -123,7 +139,7 @@ fun RegisterInputForm(
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = stringResource(id = R.string.str_logo_image),
-            modifier = Modifier
+            modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.1f) // Nastavenie výšky obrázku
                 .background(DarkPrimary),
@@ -132,6 +148,12 @@ fun RegisterInputForm(
         AnimatedVisibility(visible = !isPasswordSame) {
             Text(
                 text = stringResource(id = R.string.str_password_not_match),
+                color = MaterialTheme.colorScheme.error,
+            )
+        }
+        AnimatedVisibility(visible = alreadyExist) {
+            Text(
+                text = stringResource(id = R.string.str_already_registered),
                 color = MaterialTheme.colorScheme.error,
             )
         }

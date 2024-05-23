@@ -12,12 +12,13 @@
     <string name="str_password">Heslo</string>
     <string name="str_repeat_password">Zopakujte heslo</string>
     <string name="str_address">Adresa</string>
-    <string name="str_already_registered">Máte založený účet ?</string>
+    <string name="str_already_registered">Už bol vytvorený účet s rovnakým emailom</string>
     <string name="str_not_have_account">Nemáte založený účet ?</string>
     <string name="str_logo_image">LogoImage</string>
     <string name="str_remember">Zapamätať si ma ?</string>
     <string name="str_terms_agree">Súhlasíte s podmienkami BikeZone ? </string>
     <string name="str_password_not_match">Heslá sa nezhodujú </string>
+    <string name="str_aldready_exist">Účet už existuje, prihláste sa</string>
     <string name="cd_nav_back">navBack</string>
     <string name="str_order">Orders</string>
 
