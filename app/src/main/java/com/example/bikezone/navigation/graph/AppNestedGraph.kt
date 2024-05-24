@@ -1,19 +1,22 @@
 package com.example.bikezone.navigation.graph
 
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.bikezone.navigation.AboutDestination
 import com.example.bikezone.navigation.CartDestination
 import com.example.bikezone.navigation.HomeDestination
+import com.example.bikezone.navigation.ItemDetailsDestination
 import com.example.bikezone.navigation.OrderDestination
 import com.example.bikezone.navigation.ProfileDestination
 import com.example.bikezone.navigation.Routes
 import com.example.bikezone.ui.about.AboutScreen
 import com.example.bikezone.ui.cart.CartScreen
 import com.example.bikezone.ui.home.HomeScreen
+import com.example.bikezone.ui.item.ItemDetailScreen
 import com.example.bikezone.ui.order.OrderScreen
 import com.example.bikezone.ui.profile.ProfileScreen
 
@@ -23,6 +26,14 @@ fun NavGraphBuilder.setupAppGraph(navController: NavHostController) {
             route = HomeDestination.route
         ) {
             HomeScreen(navController)
+        }
+        composable(
+            route = ItemDetailsDestination.routeWithArgs,
+            arguments = listOf(navArgument(ItemDetailsDestination.itemIdArg) {
+                type = NavType.IntType
+            })
+        ) {
+            ItemDetailScreen(navController = navController)
         }
         composable(
             route = ProfileDestination.route

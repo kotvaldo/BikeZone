@@ -4,6 +4,7 @@
     <string name="str_about">O nás</string>
     <string name="str_cart">Košík</string>
     <string name="str_profile">Profil</string>
+    <string name="str_item_detail">Detaily</string>
     <string name="str_login">Login</string>
     <string name="str_register">Register</string>
     <string name="str_delete_account">Vymazať účet</string>
@@ -37,11 +38,12 @@
     <string name="str_bike3">CTM WIRE PRO 2024</string>
     <string name="str_bike4">KELLYS SOOT 20 2023</string>
     <string name="str_does_not_exist">Účet nebol nájdený</string>
+    <string name="str_price">Cena</string>
     <string name="str_desc_of_item">
-        Rám: ľahký hliníkový, L,&#10;
-        Kolesá: 29-palcové,&#10;
-        Prevodový systém: 21 stupňov, Shimano,&#10;
-        Brzdový systém: kotúčové, Shimano N590,&#10;
+        Rám: ľahký hliníkový, L \n
+        Kolesá: 29-palcové \n
+        Prevodový systém: 21 stupňov, Shimano \n
+        Brzdový systém: kotúčové, Shimano N590 \n
         Sedlo: ergonomické
     </string>
 </resources>

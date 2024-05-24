@@ -45,6 +45,7 @@ import com.example.bikezone.BikeZoneBottomAppBar
 import com.example.bikezone.BikeZoneTopAppBar
 import com.example.bikezone.R
 import com.example.bikezone.data.items.Item
+import com.example.bikezone.navigation.ItemDetailsDestination
 import com.example.bikezone.ui.AppViewModelProvider
 import com.example.bikezone.ui.theme.BikeZoneTheme
 import java.text.NumberFormat
@@ -52,7 +53,7 @@ import java.text.NumberFormat
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
 ) {
     val uiState by viewModel.homeUiState.collectAsState()
     BikeZoneTheme {
@@ -75,7 +76,7 @@ fun HomeScreen(
                 HomeLayout(
                     contentPadding = innerPadding,
                     itemState = uiState,
-                    onItemClick = {},
+                    onItemClick = {navController.navigate("${ItemDetailsDestination.route}/${it}")},
                     onAddClick = {},
                     onRegexChange = viewModel::updateUiState,
                 )
@@ -89,7 +90,7 @@ fun HomeLayout(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     itemState: HomeUiState,
     onAddClick: (Item) -> Unit,
-    onItemClick: (Item) -> Unit,
+    onItemClick: (Int) -> Unit,
     onRegexChange: (String) -> Unit,
 ) {
     Column(
@@ -122,7 +123,7 @@ fun HomeLayout(
                     item = item,
                     modifier = Modifier
                         .padding(8.dp)
-                        .clickable { onItemClick(item) },
+                        .clickable { onItemClick(item.id) },
                     onAddClick = onAddClick
                 )
             }

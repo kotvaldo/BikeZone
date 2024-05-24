@@ -20,8 +20,7 @@ object HomeDestination : AppNavigationDestination{
     override val titleRes: Int = R.string.app_name
     override val selectedIcon: ImageVector = Icons.Filled.Home
     override val unselectedIcon: ImageVector = Icons.Outlined.Home
-    const val itemIdArg = "itemId"
-    val routeWithArgs = "$route/{$itemIdArg}"
+
 }
 
 object CartDestination : AppNavigationDestination {
@@ -29,6 +28,14 @@ object CartDestination : AppNavigationDestination {
     override val titleRes: Int = R.string.str_cart
     override val selectedIcon = Icons.Filled.ShoppingCart
     override val unselectedIcon = Icons.Outlined.ShoppingCart
+}
+object ItemDetailsDestination : AppNavigationDestination {
+    override val route = "item_details"
+    override val titleRes = R.string.str_item_detail
+    override val selectedIcon: ImageVector = Icons.Filled.Home
+    override val unselectedIcon: ImageVector = Icons.Outlined.Home
+    const val itemIdArg = "itemId"
+    val routeWithArgs = "$route/{$itemIdArg}"
 }
 
 object ProfileDestination : AppNavigationDestination {
