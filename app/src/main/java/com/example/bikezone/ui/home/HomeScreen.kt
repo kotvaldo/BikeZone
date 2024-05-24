@@ -47,6 +47,7 @@ import com.example.bikezone.R
 import com.example.bikezone.data.items.Item
 import com.example.bikezone.ui.AppViewModelProvider
 import com.example.bikezone.ui.theme.BikeZoneTheme
+import java.text.NumberFormat
 
 @Composable
 fun HomeScreen(
@@ -61,7 +62,8 @@ fun HomeScreen(
                     title = R.string.app_name,
                     canNavigateBack = false,
                     navigateBack = {},
-                    modifier = Modifier
+                    modifier = Modifier,
+                    hasLogo = true
                 )
             },
             bottomBar = {
@@ -162,7 +164,7 @@ private fun ItemCard(
             )
             Spacer(Modifier.weight(1f))
             Text(
-                text = String.format("%.2f €", item.price),
+                text = NumberFormat.getCurrencyInstance().format(item.price).toString(),
                 style = MaterialTheme.typography.titleMedium,
                 color = Color.Green
             )

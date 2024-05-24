@@ -88,7 +88,7 @@ fun ProfileScreen(
                     onValueChange = viewModel::updateUiState,
                     onSumbitClick = {
                         viewModel.verifyOperation()
-                        if (viewModel.profileUiState.isNotSame) {
+                        if (viewModel.profileUiState.isNotSame && viewModel.profileUiState.successFullUpdate) {
                             coroutineScope.launch {
                                 viewModel.updateUser()
                             }
@@ -238,7 +238,7 @@ fun ProfileLayout(
         }
         AnimatedVisibility(visible = !userState.isNotSame) {
             Text(
-                text = stringResource(id = R.string.str_already_used),
+                text = stringResource(id = R.string.str_does_not_exist),
                 color = MaterialTheme.colorScheme.error,
             )
         }

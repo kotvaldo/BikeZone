@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 data class LoginState(
     val isWrongField: Boolean = false,
     val isAuthenticated: Boolean = false,
+    val doesExist:Boolean = true
 )
 
 class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
@@ -48,10 +49,11 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
                             currentState.copy(
                                 isAuthenticated = true,
                                 isWrongField = false,
+                                doesExist = true
                             )
                         }
                     } ?: run {
-                    _loginUiState.update { currentState -> currentState.copy(isWrongField = true) }
+                    _loginUiState.update { currentState -> currentState.copy(isWrongField = true, doesExist = false) }
                 }
             }
         } else {

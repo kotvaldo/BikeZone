@@ -1,9 +1,13 @@
 package com.example.bikezone
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,9 +23,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -48,19 +54,30 @@ fun BikeZoneTopAppBar(
     @StringRes title: Int,
     canNavigateBack: Boolean,
     modifier: Modifier = Modifier,
-    navigateBack: () -> Unit = {}
+    navigateBack: () -> Unit = {},
+    hasLogo: Boolean = false
 ) {
     TopAppBar(
         title = {
-            Box(
+            Row(
                 modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+                verticalAlignment = Alignment.CenterVertically
             ) {
+                if(hasLogo) {
+                    Image(
+                        painter = painterResource(id = R.drawable.logo),
+                        contentDescription = stringResource(id = R.string.app_name),
+                        modifier = Modifier
+                            .size(50.dp)
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                }
                 Text(
                     text = stringResource(id = title),
                     color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
                 )
+
             }
         },
         navigationIcon = {
@@ -74,8 +91,6 @@ fun BikeZoneTopAppBar(
             }
         },
         modifier = modifier
-        // Ak chcete použiť scrollBehavior, pridajte ho sem
-        // scrollBehavior = scrollBehavior
     )
 }
 @Composable

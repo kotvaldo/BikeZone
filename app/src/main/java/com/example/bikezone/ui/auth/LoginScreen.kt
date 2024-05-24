@@ -1,5 +1,6 @@
 package com.example.bikezone.ui.auth
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -83,7 +84,8 @@ fun LoginScreen(
                     }
                 },
                 isFieldsEmpty = viewModel.emailInput.isNotEmpty() && viewModel.passwordInput.isNotEmpty(),
-                navController = navController
+                navController = navController,
+                doesExist = loginUiState.doesExist
             )
         }
 
@@ -102,6 +104,7 @@ fun LoginBody(
     onPasswordChange: (String) -> Unit,
     onLoginClick: () -> Unit,
     isFieldsEmpty: Boolean,
+    doesExist:Boolean,
     navController: NavHostController
 ) {
     Column(
@@ -128,7 +131,12 @@ fun LoginBody(
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(vertical = 16.dp)
         )
-
+        AnimatedVisibility(visible = !doesExist) {
+            Text(
+                text = stringResource(id = R.string.str_does_not_exist),
+                color = MaterialTheme.colorScheme.error,
+            )
+        }
         CustomTextField(
             label = stringResource(id = R.string.str_email),
             modifier = Modifier

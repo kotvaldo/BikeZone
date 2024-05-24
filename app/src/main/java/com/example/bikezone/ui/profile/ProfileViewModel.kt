@@ -61,10 +61,10 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
     fun verifyOperation() {
         viewModelScope.launch {
             userRepository.getUserByEmailStream(profileUiState.userDetails.email).collect { user ->
-                profileUiState = if (user != null) {
-                    profileUiState.copy(isNotSame = false, successFullUpdate = false)
-                } else {
+                profileUiState = if (user == null || user.id == profileUiState.userDetails.id) {
                     profileUiState.copy(successFullUpdate = true, isNotSame = true)
+                } else {
+                    profileUiState.copy(successFullUpdate = false, isNotSame = false)
                 }
             }
         }
