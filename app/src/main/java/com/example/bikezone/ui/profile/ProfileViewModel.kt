@@ -15,16 +15,6 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-data class ProfileUiState(
-    val userDetails: UserDetails = UserDetails(),
-    val successFullUpdate: Boolean = false,
-    val isNotSame: Boolean = true
-)
-
-fun User.toProfileUiState(): ProfileUiState = ProfileUiState(
-    userDetails = this.toUserDetails()
-)
-
 class ProfileViewModel(
     private val userRepository: UserRepository,
     private val cartRepository: CartRepository
@@ -81,3 +71,12 @@ class ProfileViewModel(
 
     }
 }
+data class ProfileUiState(
+    val userDetails: UserDetails = UserDetails(),
+    val successFullUpdate: Boolean = false,
+    val isNotSame: Boolean = true
+)
+
+fun User.toProfileUiState(): ProfileUiState = ProfileUiState(
+    userDetails = this.toUserDetails()
+)

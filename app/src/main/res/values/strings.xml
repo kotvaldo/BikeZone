@@ -6,6 +6,7 @@
     <string name="str_profile">Profil</string>
     <string name="str_item_detail">Detaily</string>
     <string name="str_login">Login</string>
+    <string name="str_create_order">Vytvoriť objednávku s povinnosťou platby</string>
     <string name="str_register">Register</string>
     <string name="str_delete_account">Vymazať účet</string>
     <string name="str_submit_changes">Aktualizovať</string>
@@ -42,6 +43,7 @@
     <string name="str_empty_cart">Košík je prázdny</string>
     <string name="str_total_price">Celková cena :</string>
     <string name="str_count">Počet: </string>
+    <string name="str_delete_all_items">Vymazať všetky položky </string>
     <string name="str_desc_of_item">
         Rám: ľahký hliníkový, L \n
         Kolesá: 29-palcové \n
@@ -49,4 +51,15 @@
         Brzdový systém: kotúčové, Shimano N590 \n
         Sedlo: ergonomické
     </string>
+
+    <string name="channel_name">Odhlásenie</string>
+    <string name="channel_description">Notifikácie pre odhlásenie</string>
+    <string name="logout_notification_title">Odhlásenie úspešné</string>
+    <string name="logout_notification_text">Boli ste úspešne odhlásení</string>
+
+    <string name="order_channel_name">Objednávky</string>
+    <string name="order_channel_description">Notifikácie pre vytvorenie objednávky</string>
+    <string name="order_notification_title">Objednávka vytvorená</string>
+    <string name="order_notification_text">Vaša objednávka bola úspešne vytvorená</string>
+
 </resources>

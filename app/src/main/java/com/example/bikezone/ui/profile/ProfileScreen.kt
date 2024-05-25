@@ -1,5 +1,7 @@
 package com.example.bikezone.ui.profile
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
@@ -36,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -53,11 +56,13 @@ import com.example.bikezone.data.users.UserDetails
 import com.example.bikezone.navigation.HomeDestination
 import com.example.bikezone.navigation.LoginDestination
 import com.example.bikezone.navigation.Routes
+import com.example.bikezone.notifications.showLogoutNotification
 import com.example.bikezone.ui.AppViewModelProvider
 import com.example.bikezone.ui.components.CustomTextField
 import com.example.bikezone.ui.theme.BikeZoneTheme
 import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun ProfileScreen(
     navController: NavHostController,
@@ -66,6 +71,7 @@ fun ProfileScreen(
     val coroutineScope = rememberCoroutineScope()
     var showSignOutDialog by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
+    val context = LocalContext.current
     BikeZoneTheme {
         Scaffold(
             topBar = {
@@ -132,6 +138,7 @@ fun ProfileScreen(
                         onDismiss = { showSignOutDialog = false },
                         onAccept = {
                             coroutineScope.launch {
+                                showLogoutNotification(context)
                                 viewModel.updateUiState(
                                     userDetails = viewModel.profileUiState.userDetails.copy(
                                         auth = false

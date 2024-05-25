@@ -1,11 +1,16 @@
 package com.example.bikezone
 
+import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import com.example.bikezone.data.BikeZoneDatabase
 import com.example.bikezone.data.items.Item
+import com.example.bikezone.notifications.checkNotificationPermission
+import com.example.bikezone.notifications.requestNotificationPermission
 import com.example.bikezone.ui.theme.BikeZoneTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,8 +18,16 @@ import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val context = this
+        val activity = context as? Activity
+        activity?.let {
+            if (!checkNotificationPermission(it)) {
+                requestNotificationPermission(it)
+            }
+        }
         setContent {
           //  removeDatabase()
             BikeZoneTheme {

@@ -20,6 +20,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -32,6 +34,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -44,6 +47,7 @@ import com.example.bikezone.BikeZoneBottomAppBar
 import com.example.bikezone.BikeZoneTopAppBar
 import com.example.bikezone.R
 import com.example.bikezone.navigation.HomeDestination
+import com.example.bikezone.notifications.showOrderCreateNotification
 import com.example.bikezone.ui.AppViewModelProvider
 import com.example.bikezone.ui.theme.BikeZoneTheme
 import java.text.NumberFormat
@@ -53,6 +57,7 @@ fun CartScreen(
     navController: NavHostController,
     viewModel: CartViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val context = LocalContext.current
     val cartUiState by viewModel.cartUiState.collectAsState()
     BikeZoneTheme {
         Scaffold(
@@ -71,13 +76,18 @@ fun CartScreen(
             },
             content = { innerPadding ->
                 CartBody(
-                    contentPadding = innerPadding,
                     cartItems = cartUiState.cartItems,
                     totalPrice = cartUiState.finalPrice,
-                    onDeleteAllClick = viewModel::deleteAllCartItems,
-                    onDeleteClick = viewModel::deleteItemCartById,
+                    contentPadding = innerPadding,
                     onMinusClick = viewModel::reduceCountByOne,
-                    onAddClick = viewModel::increaseCountByOne
+                    onDeleteClick = viewModel::deleteItemCartById,
+                    onAddClick = viewModel::increaseCountByOne,
+                    onDeleteAllClick = viewModel::deleteAllCartItems,
+                    onOrderClick = {
+                        showOrderCreateNotification(context)
+
+                        viewModel.deleteAllCartItems()
+                    }
                 )
             })
     }
@@ -92,7 +102,8 @@ private fun CartBody(
     onMinusClick: (Int) -> Unit = {},
     onDeleteClick: (Int) -> Unit = {},
     onAddClick: (Int) -> Unit = {},
-    onDeleteAllClick: () -> Unit
+    onDeleteAllClick: () -> Unit,
+    onOrderClick: () -> Unit = {}
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -106,13 +117,14 @@ private fun CartBody(
         } else {
             CartItemList(
                 cartItems = cartItems,
+                totalPrice = totalPrice,
                 contentPadding = contentPadding,
                 modifier = Modifier.padding(20.dp),
-                totalPrice = totalPrice,
                 onAddClick = onAddClick,
                 onMinusClick = onMinusClick,
                 onDeleteClick =  onDeleteClick,
-                onDeleteAllClick = onDeleteAllClick
+                onDeleteAllClick = onDeleteAllClick,
+                onOrderClick = onOrderClick
             )
         }
     }
@@ -127,7 +139,8 @@ private fun CartItemList(
     onAddClick: (Int) -> Unit,
     onMinusClick: (Int) -> Unit,
     onDeleteClick: (Int) -> Unit,
-    onDeleteAllClick: () -> Unit
+    onDeleteAllClick: () -> Unit,
+    onOrderClick: () -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
@@ -145,10 +158,40 @@ private fun CartItemList(
             )
         }
         item {
+            TotalPriceRow(totalPrice = totalPrice, onOrderClick = onOrderClick, onDeleteAllClick = onDeleteAllClick)
+        }
+    }
+}
+
+@Composable
+private fun TotalPriceRow(
+    totalPrice: Double,
+    onOrderClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDeleteAllClick: () -> Unit
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier.padding(16.dp)
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+
+            Text(
+                text = stringResource(R.string.str_delete_all_items),
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(8.dp)
+            )
+            Spacer(modifier = Modifier.width(20.dp))
             IconButton(
                 onClick = { onDeleteAllClick() },
                 modifier = Modifier
-                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), CircleShape)
+                    .background(
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                        CircleShape
+                    )
                     .size(32.dp)
             ) {
                 Icon(
@@ -158,30 +201,39 @@ private fun CartItemList(
                 )
             }
         }
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-
-                Text(
-                    text = stringResource(R.string.str_total_price),
-                    style = MaterialTheme.typography.titleLarge,
-                    textDecoration = TextDecoration.Underline,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(8.dp)
-                )
-                Text(
-                    text = NumberFormat.getCurrencyInstance().format(totalPrice).toString(),
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(8.dp)
-                )
-            }
-
+        Spacer(modifier = Modifier.height(40.dp))
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.str_total_price),
+                style = MaterialTheme.typography.titleLarge,
+                textDecoration = TextDecoration.Underline,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(8.dp)
+            )
+            Text(
+                text = NumberFormat.getCurrencyInstance().format(totalPrice).toString(),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(8.dp)
+            )
+        }
+        Button(
+            onClick = onOrderClick,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.tertiary,
+                contentColor = MaterialTheme.colorScheme.onTertiary,
+            ),
+            modifier = Modifier.padding(8.dp)
+        ) {
+            Text(text = stringResource(id = R.string.str_create_order))
         }
     }
 }
-
 @Composable
 private fun CartItemRow(
     cartItemDetail: CartItemDetail,
