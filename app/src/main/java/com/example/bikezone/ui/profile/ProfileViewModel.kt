@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.bikezone.data.cartItems.CartRepository
 import com.example.bikezone.data.users.User
 import com.example.bikezone.data.users.UserDetails
 import com.example.bikezone.data.users.UserRepository
@@ -23,7 +24,7 @@ data class ProfileUiState(
 fun User.toProfileUiState(): ProfileUiState = ProfileUiState(
     userDetails = this.toUserDetails()
 )
-class ProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
+class ProfileViewModel(private val userRepository: UserRepository, private val cartRepository: CartRepository) : ViewModel() {
 
     /**
      * Holds current user ui state
@@ -42,6 +43,11 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
 
     fun updateUiState(userDetails: UserDetails = profileUiState.userDetails, successFullUpdate: Boolean = false, isNotSame: Boolean = true) {
         profileUiState = ProfileUiState(userDetails = userDetails,successFullUpdate = successFullUpdate, isNotSame = isNotSame)
+        if(!profileUiState.userDetails.auth) {
+            viewModelScope.launch {
+                cartRepository.deleteAllItems(cartRepository.getAllCartItemsStream().first())
+            }
+        }
     }
 
     suspend fun updateUser() {

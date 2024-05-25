@@ -20,13 +20,13 @@ interface CartDao {
     @Delete
     suspend fun delete(cartItem: CartItem)
 
+    @Delete
+    suspend fun deleteAllItems(listOfItems : List<CartItem>)
     @Query("SELECT * FROM cart_items WHERE id = :id")
-    fun getCartItembyItem(id: Int): CartItem?
+    fun getCartItembyId(id: Int): Flow<CartItem?>
     @Query("SELECT * FROM cart_items WHERE itemId = :itemId")
-    fun getCartItemByItemId(itemId: Int): CartItem?
+    fun getCartItemByItemId(itemId: Int): Flow<CartItem?>
 
     @Query("SELECT * FROM cart_items")
     fun getAllCartItems(): Flow<List<CartItem>>
-    @Delete
-    fun deleteAllItems(): Flow<List<CartItem>>
 }

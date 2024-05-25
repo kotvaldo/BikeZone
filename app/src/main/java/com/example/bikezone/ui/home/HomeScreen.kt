@@ -6,12 +6,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -32,12 +34,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -77,7 +82,7 @@ fun HomeScreen(
                     contentPadding = innerPadding,
                     itemState = uiState,
                     onItemClick = {navController.navigate("${ItemDetailsDestination.route}/${it}")},
-                    onAddClick = {},
+                    onAddClick = viewModel::addItemToCart,
                     onRegexChange = viewModel::updateUiState,
                 )
             }
@@ -89,7 +94,7 @@ fun HomeScreen(
 fun HomeLayout(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     itemState: HomeUiState,
-    onAddClick: (Item) -> Unit,
+    onAddClick: (Int) -> Unit,
     onItemClick: (Int) -> Unit,
     onRegexChange: (String) -> Unit,
 ) {
@@ -134,43 +139,68 @@ fun HomeLayout(
 @Composable
 private fun ItemCard(
     item: Item,
-    onAddClick: (Item) -> Unit,
+    onAddClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(8.dp),
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Center
         ) {
             Image(
                 painter = painterResource(id = item.picture),
                 contentDescription = null,
                 modifier = Modifier
                     .height(150.dp)
-                    .fillMaxWidth(),
+                    .clip(CircleShape)
+                ,
                 contentScale = ContentScale.Fit
             )
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .height(10.dp))
             Text(
                 text = item.name,
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textDecoration = TextDecoration.Underline,
+                fontStyle = FontStyle.Italic,
+
             )
-            Spacer(Modifier.weight(1f))
-            Text(
-                text = NumberFormat.getCurrencyInstance().format(item.price).toString(),
-                style = MaterialTheme.typography.titleMedium,
-                color = Color.Green
-            )
+            Spacer(
+                Modifier
+                    .fillMaxWidth()
+                    .height(20.dp))
+            Row(
+            ) {
+                Text(
+                    text = stringResource(id = R.string.str_price),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = colorResource(id = R.color.custom_orange),
+                    fontFamily = FontFamily.Default,
+                )
+                Spacer(Modifier.width(15.dp))
+                Text(
+                    text = NumberFormat.getCurrencyInstance().format(item.price).toString(),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onSurface  ,
+                    fontFamily = FontFamily.Default,
+
+                )
+            }
+
             IconButton(
-                onClick = { onAddClick(item) },
+                onClick = { onAddClick(item.id) },
                 modifier = Modifier
                     .align(Alignment.End)
                     .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), CircleShape)

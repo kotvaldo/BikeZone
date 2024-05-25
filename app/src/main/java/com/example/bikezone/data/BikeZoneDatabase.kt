@@ -9,7 +9,6 @@ import com.example.bikezone.data.cartItems.CartItem
 import com.example.bikezone.data.items.Item
 import com.example.bikezone.data.items.ItemDao
 import com.example.bikezone.data.orders.Order
-import com.example.bikezone.data.orders.OrderDao
 import com.example.bikezone.data.users.User
 import com.example.bikezone.data.users.UserDao
 
@@ -18,7 +17,6 @@ abstract class BikeZoneDatabase : RoomDatabase() {
     abstract fun itemDao(): ItemDao
     abstract fun userDao(): UserDao
     abstract fun cartDao(): CartDao
-    abstract fun orderDao(): OrderDao
 
     companion object {
         @Volatile

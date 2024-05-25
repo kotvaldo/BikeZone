@@ -1,5 +1,6 @@
 package com.example.bikezone.ui
 
+import CartViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
@@ -27,15 +28,27 @@ object AppViewModelProvider {
             AuthViewModel(application().container.userRepository)
         }
         initializer {
-            ProfileViewModel(application().container.userRepository)
+            ProfileViewModel(
+                application().container.userRepository,
+                application().container.cartRepository
+            )
         }
         initializer {
-            HomeViewModel(application().container.itemRepository)
+            HomeViewModel(application().container.itemRepository,
+                application().container.cartRepository
+            )
         }
         initializer {
             ItemDetailsViewModel(
                 this.createSavedStateHandle(),
-                application().container.itemRepository)
+                application().container.itemRepository
+            )
+        }
+        initializer {
+            CartViewModel(
+                application().container.cartRepository,
+                application().container.itemRepository
+            )
         }
     }
 }

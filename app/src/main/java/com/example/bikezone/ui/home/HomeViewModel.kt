@@ -3,17 +3,21 @@ package com.example.bikezone.ui.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.bikezone.data.cartItems.CartItem
+import com.example.bikezone.data.cartItems.CartRepository
 import com.example.bikezone.data.items.Item
 import com.example.bikezone.data.items.ItemRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val itemRepository: ItemRepository) : ViewModel() {
+class HomeViewModel(private val itemRepository: ItemRepository,
+                    private val cartRepository: CartRepository,) : ViewModel() {
 
     private val _homeUiState = MutableStateFlow(HomeUiState())
     val homeUiState: StateFlow<HomeUiState> = _homeUiState.asStateFlow()
@@ -57,6 +61,16 @@ class HomeViewModel(private val itemRepository: ItemRepository) : ViewModel() {
                 initialValue = HomeUiState(regex = regex)
             ).collect { newState ->
                 _homeUiState.value = newState
+            }
+        }
+    }
+    fun addItemToCart(itemId: Int) {
+        viewModelScope.launch {
+            val cartItem = cartRepository.getCartItemByItemIdStream(itemId).first()
+            if (cartItem == null) {
+                cartRepository.insert(CartItem(itemId = itemId, count = 1))
+            } else {
+                cartRepository.update(cartItem.copy(count = cartItem.count + 1))
             }
         }
     }
