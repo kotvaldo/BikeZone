@@ -1,3 +1,4 @@
+package com.example.bikezone.ui.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,9 +11,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
-class CartViewModel(
-    private val cartRepository: CartRepository,
-    private val itemRepository: ItemRepository,
+class CartViewModel(private val cartRepository: CartRepository, private val itemRepository: ItemRepository,
 ) : ViewModel() {
 
 
@@ -20,10 +19,10 @@ class CartViewModel(
     val cartUiState: StateFlow<CartUiState> get() = _cartUiState.asStateFlow()
 
     init {
-        updateUiState()
+        initializeCartUiState()
     }
 
-    private fun updateUiState() {
+    private fun initializeCartUiState() {
         viewModelScope.launch {
             cartRepository.getAllCartItemsStream().collect { cartItems ->
                 val cartItemDetails = cartItems.mapNotNull { cartItem ->
@@ -50,9 +49,6 @@ class CartViewModel(
         }
     }
 
-    companion object {
-        private const val TIMEOUT_MILLIS = 5_000L
-    }
 
     fun deleteAllCartItems() {
         viewModelScope.launch {
@@ -60,6 +56,37 @@ class CartViewModel(
             cartRepository.deleteAllItems(allCartItems)
         }
     }
+    fun reduceCountByOne(cartItemId: Int) {
+        viewModelScope.launch {
+            val currentItem = cartRepository.getCartItemByIdStream(cartItemId).firstOrNull()
+            if (currentItem != null) {
+                if(currentItem.count - 1 > 0) {
+                    cartRepository.update(currentItem.copy(count = currentItem.count - 1))
+                } else {
+                    deleteItemCartById(cartItemId)
+                }
+            }
+        }
+    }
+
+    fun increaseCountByOne(cartItemId: Int) {
+        viewModelScope.launch {
+            val currentItem = cartRepository.getCartItemByIdStream(cartItemId).firstOrNull()
+            if (currentItem != null) {
+                cartRepository.update(currentItem.copy(count = currentItem.count + 1))
+            }
+        }
+    }
+    fun deleteItemCartById(cartItemId: Int) {
+        viewModelScope.launch {
+            val currentItem = cartRepository.getCartItemByIdStream(cartItemId).firstOrNull()
+            if (currentItem != null) {
+                cartRepository.delete(currentItem)
+            }
+        }
+    }
+
+
 
 
 }

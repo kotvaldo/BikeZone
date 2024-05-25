@@ -41,7 +41,7 @@
     <string name="str_price">Cena : </string>
     <string name="str_empty_cart">Košík je prázdny</string>
     <string name="str_total_price">Celková cena :</string>
-    <string name="str_count">Počet</string>
+    <string name="str_count">Počet: </string>
     <string name="str_desc_of_item">
         Rám: ľahký hliníkový, L \n
         Kolesá: 29-palcové \n
