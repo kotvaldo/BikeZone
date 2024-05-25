@@ -24,7 +24,11 @@ data class ProfileUiState(
 fun User.toProfileUiState(): ProfileUiState = ProfileUiState(
     userDetails = this.toUserDetails()
 )
-class ProfileViewModel(private val userRepository: UserRepository, private val cartRepository: CartRepository) : ViewModel() {
+
+class ProfileViewModel(
+    private val userRepository: UserRepository,
+    private val cartRepository: CartRepository
+) : ViewModel() {
 
     /**
      * Holds current user ui state
@@ -41,9 +45,12 @@ class ProfileViewModel(private val userRepository: UserRepository, private val c
         }
     }
 
-    fun updateUiState(userDetails: UserDetails = profileUiState.userDetails, successFullUpdate: Boolean = false, isNotSame: Boolean = true) {
-        profileUiState = ProfileUiState(userDetails = userDetails,successFullUpdate = successFullUpdate, isNotSame = isNotSame)
-        if(!profileUiState.userDetails.auth) {
+    fun updateUiState(
+        userDetails: UserDetails = profileUiState.userDetails,
+    ) {
+        profileUiState = profileUiState.copy(userDetails = userDetails)
+
+        if (!profileUiState.userDetails.auth) {
             viewModelScope.launch {
                 cartRepository.deleteAllItems(cartRepository.getAllCartItemsStream().first())
             }
@@ -58,22 +65,19 @@ class ProfileViewModel(private val userRepository: UserRepository, private val c
         userRepository.deleteItem(profileUiState.userDetails.toUser())
     }
 
-    fun isNotEmpty(userDetails: UserDetails = profileUiState.userDetails) :Boolean {
+    fun isNotEmpty(userDetails: UserDetails = profileUiState.userDetails): Boolean {
         return with(userDetails) {
             name.isNotBlank() && email.isNotBlank() && address.isNotBlank() && password.isNotBlank()
         }
     }
 
-    fun verifyOperation() {
-        viewModelScope.launch {
-            userRepository.getUserByEmailStream(profileUiState.userDetails.email).collect { user ->
-                profileUiState = if (user == null || user.id == profileUiState.userDetails.id) {
-                    profileUiState.copy(successFullUpdate = true, isNotSame = true)
-                } else {
-                    profileUiState.copy(successFullUpdate = false, isNotSame = false)
-                }
-            }
+    suspend fun verifyOperation() {
+        val user = userRepository.getUserByEmailStream(profileUiState.userDetails.email).first()
+        profileUiState = if (user == null || user.auth) {
+            profileUiState.copy(successFullUpdate = true, isNotSame = true)
+        } else {
+            profileUiState.copy(successFullUpdate = false, isNotSame = false)
         }
-    }
 
+    }
 }

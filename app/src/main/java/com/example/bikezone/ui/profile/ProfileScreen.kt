@@ -1,6 +1,5 @@
 package com.example.bikezone.ui.profile
 
-import CartViewModel
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
@@ -62,7 +61,6 @@ import kotlinx.coroutines.launch
 fun ProfileScreen(
     navController: NavHostController,
     viewModel: ProfileViewModel = viewModel(factory = AppViewModelProvider.Factory),
-    cartViewModel: CartViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
     var showSignOutDialog by remember { mutableStateOf(false) }
@@ -89,9 +87,9 @@ fun ProfileScreen(
                     userState = viewModel.profileUiState,
                     onValueChange = viewModel::updateUiState,
                     onSumbitClick = {
-                        viewModel.verifyOperation()
-                        if (viewModel.profileUiState.isNotSame) {
-                            coroutineScope.launch {
+                        coroutineScope.launch {
+                            viewModel.verifyOperation()
+                            if (viewModel.profileUiState.successFullUpdate) {
                                 viewModel.updateUser()
                             }
                         }
