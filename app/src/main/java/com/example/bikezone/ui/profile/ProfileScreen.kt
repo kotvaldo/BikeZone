@@ -90,7 +90,7 @@ fun ProfileScreen(
                     onValueChange = viewModel::updateUiState,
                     onSumbitClick = {
                         viewModel.verifyOperation()
-                        if (viewModel.profileUiState.isNotSame && viewModel.profileUiState.successFullUpdate) {
+                        if (viewModel.profileUiState.isNotSame) {
                             coroutineScope.launch {
                                 viewModel.updateUser()
                             }
