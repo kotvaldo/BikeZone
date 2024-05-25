@@ -51,6 +51,7 @@ import com.example.bikezone.BikeZoneTopAppBar
 import com.example.bikezone.R
 import com.example.bikezone.data.users.UserDetails
 import com.example.bikezone.navigation.HomeDestination
+import com.example.bikezone.navigation.LoginDestination
 import com.example.bikezone.navigation.Routes
 import com.example.bikezone.ui.AppViewModelProvider
 import com.example.bikezone.ui.components.CustomTextField
@@ -130,21 +131,20 @@ fun ProfileScreen(
                         dismiss = R.string.str_no,
                         onDismiss = { showSignOutDialog = false },
                         onAccept = {
-                            viewModel.updateUiState(
-                                userDetails = viewModel.profileUiState.userDetails.copy(
-                                    auth = false
-                                )
-                            )
                             coroutineScope.launch {
+                                viewModel.updateUiState(
+                                    userDetails = viewModel.profileUiState.userDetails.copy(
+                                        auth = false
+                                    )
+                                )
                                 viewModel.updateUser()
-                            }
-                            navController.navigate(Routes.AuthRoute.route) {
-                                navController.navigate(Routes.AuthRoute.route) {
-                                    popUpTo(0) { inclusive = true }  // Clear the back stack
-                                    launchSingleTop = true
-                                    restoreState = true
+                                navController.navigate(LoginDestination.route) {
+                                    popUpTo(LoginDestination.route) {
+                                        inclusive = true
+                                    }
                                 }
                             }
+
                         }
                     )
                 }
@@ -238,7 +238,7 @@ fun ProfileLayout(
         }
         AnimatedVisibility(visible = !userState.isNotSame) {
             Text(
-                text = stringResource(id = R.string.str_does_not_exist),
+                text = stringResource(id = R.string.str_aldready_exist),
                 color = MaterialTheme.colorScheme.error,
             )
         }
