@@ -34,7 +34,7 @@ class RegisterViewModel(private val userRepository: UserRepository) : ViewModel(
         registerUiState = registerState
     }
     fun updateRegisterDetails(registerDetails: RegisterUserDetails) {
-        registerUiState = registerUiState.copy(userDetails = registerDetails)
+        registerUiState = registerUiState.copy(userDetails = registerDetails, isPasswordSame = this.verifySamePasswds(registerDetails), isFieldsNotEmpty = verifyIsFieldsNotEmpty(registerDetails))
     }
 
     fun updateStateTermsAccept(termsAccepted: Boolean) {
