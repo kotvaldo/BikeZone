@@ -56,9 +56,6 @@ class MainActivity : ComponentActivity() {
         val db = BikeZoneDatabase.getDatabase(context)
         CoroutineScope(Dispatchers.IO).launch {
             val itemDao = db.itemDao()
-            val userDao = db.userDao()
-            val userA = User(0,"a", "a", "a", "a", false)
-            val userB = User(0,"b", "b", "b", "b", false)
             val item = Item(name = "CTM WIRE 2024", price = 2500.0, picture = R.drawable.bike1, desc = R.string.str_desc_of_item)
             val item2 = Item(name = "CTM WIRE XPERT 2024", price = 2800.0, picture = R.drawable.bike2, desc = R.string.str_desc_of_item)
             val item3 = Item(name = "CTM WIRE PRO 2024", price = 3000.0, picture = R.drawable.bike3, desc = R.string.str_desc_of_item)
@@ -79,8 +76,6 @@ class MainActivity : ComponentActivity() {
             itemDao.insert(item8)
             itemDao.insert(item9)
             itemDao.insert(item10)
-            userDao.insert(userA)
-            userDao.insert(userB)
 
 
         }

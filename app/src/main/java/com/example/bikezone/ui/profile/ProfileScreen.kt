@@ -229,7 +229,7 @@ fun ProfileLayout(
         }
         AnimatedVisibility(visible = !userState.isNotSame) {
             Text(
-                text = stringResource(id = R.string.str_aldready_exist),
+                text = stringResource(id = R.string.str_already_used),
                 color = MaterialTheme.colorScheme.error,
             )
         }
