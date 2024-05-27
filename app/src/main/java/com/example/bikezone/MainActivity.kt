@@ -29,13 +29,13 @@ class MainActivity : ComponentActivity() {
                 requestNotificationPermission(it)
             }
         }
-        //removeDatabase()
+        removeDatabase()
         setContent {
             BikeZoneTheme {
                 BikeZoneApp()
             }
         }
-        //setupDatabase(this)
+        setupDatabase(this)
        // addUser(this)
     }
     private fun removeDatabase() {
@@ -66,9 +66,9 @@ class MainActivity : ComponentActivity() {
             val item5 = Item(name = "CTM BLADE Comp 2023", price = 1099.0, picture = R.drawable.bike5, desc = R.string.str_desc_of_item)
             val item6 = Item(name = "LAPIERRE Pulsium SAT 5.0 2023", price = 2969.0, picture = R.drawable.bike6, desc = R.string.str_desc_of_item)
             val item7 = Item(name = "MERIDA SCULTURA 6000 čierna metalíza(strieborný) 2022", price = 2969.0, picture = R.drawable.bike7, desc = R.string.str_desc_of_item)
-            val item8 = Item(name = "Brašna rámová KLS WEDGE ECO, blue", price = 14.90, picture = R.drawable.accesory1, desc = R.string.str_desc_of_item)
-            val item9 = Item(name = "Bunda KELLYS LEVANTE black 2022", price = 56.99, picture = R.drawable.accesory2, desc = R.string.str_desc_of_item)
-            val item10 = Item(name = "Cyklopočítač DIRECT WL black-red", price = 29.90, picture = R.drawable.accesory3, desc = R.string.str_desc_of_item)
+            val item8 = Item(name = "Brašna rámová KLS WEDGE ECO, blue", price = 14.90, picture = R.drawable.accesory1, desc = R.string.str_desc_of_clothes)
+            val item9 = Item(name = "Bunda KELLYS LEVANTE black 2022", price = 56.99, picture = R.drawable.accesory2, desc = R.string.str_desc_of_clothes)
+            val item10 = Item(name = "Cyklopočítač DIRECT WL black-red", price = 29.90, picture = R.drawable.accesory3, desc = R.string.str_desc_of_cycle_cmp)
             itemDao.insert(item)
             itemDao.insert(item2)
             itemDao.insert(item3)
