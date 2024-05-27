@@ -58,6 +58,12 @@
     <string name="order_count">Počet Položiek:</string>
     <string name="order_id">Číslo objednávky:</string>
     <string name="order_delete">Zrušiť objednávku</string>
+    <string name="str_desc_of_app">Vitajte v BikeZone, vašom spoľahlivom eshope pre všetky vaše cyklistické potreby. Ponúkame široký výber bicyklov, príslušenstva a náhradných dielov.</string>
+    <string name="str_desc_of_app_2">Naším cieľom je poskytovať kvalitné produkty a vynikajúce služby zákazníkom. Či už ste profesionálny cyklista alebo len začínate, máme pre vás to pravé.</string>
+    <string name="str_contact">Kontaktujte nás:</string>
+    <string name="str_email_desc">Email: info@bikezone.sk</string>
+    <string name="str_phone_desc">Telefón: +421 123 456 789</string>
+    <string name="str_rights">Autorské práva © 2023 BikeZone. Všetky práva vyhradené.</string>
     <string name="str_desc_of_item">
         Rám: ľahký hliníkový, L \n
         Kolesá: 29-palcové \n
@@ -65,4 +71,25 @@
         Brzdový systém: kotúčové, Shimano N590 \n
         Sedlo: ergonomické
     </string>
+    <string name="str_desc_of_cycle_cmp">
+    Displej: 2.5-palcový farebný \n
+    GPS: vstavaný \n
+    Funkcie: meranie vzdialenosti, rýchlosti, nadmorskej výšky \n
+    Konektivita: Bluetooth, ANT+ \n
+    Batéria: výdrž až 20 hodín \n
+    Odolnosť: vodotesný (IPX7) \n
+    Ukladanie dát: interná pamäť 8 GB \n
+    Podpora mapových podkladov: áno
+    </string>
+
+    <string name="str_desc_of_clothes">
+    Materiál: ľahký, priedušný polyester \n
+    Veľkosti: S, M, L, XL \n
+    Farba: čierna s reflexnými prvkami \n
+    Vetracie zóny: sieťované panely na bokoch \n
+    Vrecká: zadné vrecko na zips \n
+    Strih: ergonomický, vhodný na dlhé jazdy \n
+    Bezpečnostné prvky: reflexné pásiky pre lepšiu viditeľnosť \n
+    Údržba: možno prať v práčke na 30°C
+</string>
 </resources>

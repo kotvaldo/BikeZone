@@ -35,7 +35,7 @@ class CartViewModel(
             val authUser = userRepository.getAuthUserStream(true).first()
             if(authUser != null) {
                 cartRepository.getAllCartItemsStream(authUser.id).collect { cartItems ->
-                    val cartItemDetails = cartItems.mapNotNull { cartItem ->
+                    val cardItems = cartItems.mapNotNull { cartItem ->
                         val item = itemRepository.getItemByIdStream(cartItem.itemId).firstOrNull()
                         if (item != null) {
                             CartItemDetail(
@@ -54,8 +54,8 @@ class CartViewModel(
                             null
                         }
                     }
-                    val finalPrice = cartItemDetails.sumOf { it.itemDetail.price * it.count }
-                    _cartUiState.value = CartUiState(cartItems = cartItemDetails, finalPrice = finalPrice)
+                    val finalPrice = cardItems.sumOf { it.itemDetail.price * it.count }
+                    _cartUiState.value = CartUiState(cartItems = cardItems, finalPrice = finalPrice)
             }
 
             }

@@ -49,6 +49,7 @@ import com.example.bikezone.BikeZoneBottomAppBar
 import com.example.bikezone.BikeZoneTopAppBar
 import com.example.bikezone.R
 import com.example.bikezone.data.items.Item
+import com.example.bikezone.navigation.AboutDestination
 import com.example.bikezone.navigation.ItemDetailsDestination
 import com.example.bikezone.ui.AppViewModelProvider
 import com.example.bikezone.ui.theme.BikeZoneTheme
@@ -67,6 +68,7 @@ fun HomeScreen(
                     title = R.string.app_name,
                     canNavigateBack = false,
                     navigateBack = {},
+                    navigateUp = {navController.navigate(AboutDestination.route)},
                     modifier = Modifier,
                     hasLogo = true
                 )
