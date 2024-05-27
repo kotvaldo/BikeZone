@@ -29,13 +29,13 @@ class MainActivity : ComponentActivity() {
                 requestNotificationPermission(it)
             }
         }
+        //setupDatabase(this)
         //removeDatabase()
         setContent {
             BikeZoneTheme {
                 BikeZoneApp()
             }
         }
-        //setupDatabase(this)
        // addUser(this)
     }
     private fun removeDatabase() {

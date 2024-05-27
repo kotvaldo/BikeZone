@@ -4,10 +4,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.bikezone.data.users.User
 import com.example.bikezone.data.users.UserRepository
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.first
 
 data class RegisterUserDetails(
     val id: Int = 0,
@@ -31,14 +30,11 @@ class RegisterViewModel(private val userRepository: UserRepository) : ViewModel(
     var registerUiState by mutableStateOf(RegisterState())
         private set
 
-    fun updateUiState(registerUserDetails: RegisterUserDetails) {
-        registerUiState = RegisterState(
-            userDetails = registerUserDetails,
-            termsAccepted = registerUiState.termsAccepted,
-            isPasswordSame = verifySamePasswds(registerUserDetails),
-            alreadyExist = registerUiState.alreadyExist,
-            isFieldsNotEmpty = verifyIsFieldsNotEmpty(registerUserDetails)
-        )
+    fun updateUiState(registerState: RegisterState) {
+        registerUiState = registerState
+    }
+    fun updateRegisterDetails(registerDetails: RegisterUserDetails) {
+        registerUiState = registerUiState.copy(userDetails = registerDetails)
     }
 
     fun updateStateTermsAccept(termsAccepted: Boolean) {
@@ -51,14 +47,13 @@ class RegisterViewModel(private val userRepository: UserRepository) : ViewModel(
         )
     }
 
-    fun verifyAlreadyExistAccount() {
-        viewModelScope.launch {
-            userRepository.getUserByEmailStream(registerUiState.userDetails.email).collect { user ->
-                if (user != null) {
-                    registerUiState = registerUiState.copy(alreadyExist = true)
-                }
-            }
+     suspend fun verifyAlreadyExistAccount() {
+
+        val user = userRepository.getUserByEmailStream(registerUiState.userDetails.email).first()
+        if (user != null) {
+            registerUiState = registerUiState.copy(alreadyExist = true)
         }
+
     }
 
     suspend fun saveItem() {
@@ -71,7 +66,7 @@ class RegisterViewModel(private val userRepository: UserRepository) : ViewModel(
         }
     }
 
-    fun verifyTermsAccepted() : Boolean {
+    fun verifyTermsAccepted(): Boolean {
         return registerUiState.termsAccepted
     }
 
@@ -85,7 +80,7 @@ class RegisterViewModel(private val userRepository: UserRepository) : ViewModel(
 fun RegisterUserDetails.toUser(): User = User(
     id = id,
     name = name,
-    email = email   ,
+    email = email,
     password = password,
     address = address,
     auth = auth

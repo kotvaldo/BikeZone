@@ -1,5 +1,6 @@
 package com.example.bikezone.ui.auth
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -69,17 +70,20 @@ fun RegisterScreen(
         ) {
             RegisterBody(
                 onRegisterClick = {
-                    viewModel.verifyAlreadyExistAccount()
-                    if (!viewModel.registerUiState.alreadyExist) {
-                        coroutineScope.launch {
+                    coroutineScope.launch {
+                        viewModel.updateUiState(registerState = viewModel.registerUiState.copy(alreadyExist = false))
+                        viewModel.verifyAlreadyExistAccount()
+                        if (!viewModel.registerUiState.alreadyExist) {
+                            Log.d("EXIIIIIIIIST", "FALSE")
                             viewModel.saveItem()
                             navController.navigate(LoginDestination.route)
-                        }
 
+                        }
                     }
+
                 },
                 navController = navController,
-                onValueChange = viewModel::updateUiState,
+                onValueChange = viewModel::updateRegisterDetails,
                 registerState = viewModel.registerUiState,
                 onTermsAcceptedChange = viewModel::updateStateTermsAccept,
                 isFieldsNotEmpty = viewModel.verifyIsFieldsNotEmpty() && viewModel.verifyTermsAccepted(),
