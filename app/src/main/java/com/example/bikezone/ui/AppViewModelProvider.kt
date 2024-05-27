@@ -12,6 +12,7 @@ import com.example.bikezone.ui.auth.RegisterViewModel
 import com.example.bikezone.ui.cart.CartViewModel
 import com.example.bikezone.ui.home.HomeViewModel
 import com.example.bikezone.ui.item.ItemDetailsViewModel
+import com.example.bikezone.ui.order.OrderViewModel
 import com.example.bikezone.ui.profile.ProfileViewModel
 
 object AppViewModelProvider {
@@ -30,12 +31,15 @@ object AppViewModelProvider {
         initializer {
             ProfileViewModel(
                 application().container.userRepository,
-                application().container.cartRepository
+                application().container.cartRepository,
+                application().container.orderRepository,
             )
         }
         initializer {
-            HomeViewModel(application().container.itemRepository,
-                application().container.cartRepository
+            HomeViewModel(
+                application().container.itemRepository,
+                application().container.cartRepository,
+                application().container.userRepository
             )
         }
         initializer {
@@ -47,7 +51,15 @@ object AppViewModelProvider {
         initializer {
             CartViewModel(
                 application().container.cartRepository,
-                application().container.itemRepository
+                application().container.itemRepository,
+                application().container.orderRepository,
+                application().container.userRepository
+            )
+        }
+        initializer {
+            OrderViewModel(
+                application().container.orderRepository,
+                application().container.userRepository
             )
         }
     }

@@ -31,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,10 +47,13 @@ import androidx.navigation.NavHostController
 import com.example.bikezone.BikeZoneBottomAppBar
 import com.example.bikezone.BikeZoneTopAppBar
 import com.example.bikezone.R
+import com.example.bikezone.navigation.CartDestination
 import com.example.bikezone.navigation.HomeDestination
+import com.example.bikezone.navigation.OrderDestination
 import com.example.bikezone.notifications.showOrderCreateNotification
 import com.example.bikezone.ui.AppViewModelProvider
 import com.example.bikezone.ui.theme.BikeZoneTheme
+import kotlinx.coroutines.launch
 import java.text.NumberFormat
 
 @Composable
@@ -59,13 +63,14 @@ fun CartScreen(
 ) {
     val context = LocalContext.current
     val cartUiState by viewModel.cartUiState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
     BikeZoneTheme {
         Scaffold(
             topBar = {
                 BikeZoneTopAppBar(
                     title = R.string.str_cart,
                     canNavigateBack = true,
-                    navigateBack = {navController.navigate(HomeDestination.route)},
+                    navigateBack = { navController.navigate(HomeDestination.route)},
                     modifier = Modifier
                 )
             },
@@ -82,11 +87,21 @@ fun CartScreen(
                     onMinusClick = viewModel::reduceCountByOne,
                     onDeleteClick = viewModel::deleteItemCartById,
                     onAddClick = viewModel::increaseCountByOne,
-                    onDeleteAllClick = viewModel::deleteAllCartItems,
-                    onOrderClick = {
-                        showOrderCreateNotification(context)
+                    onDeleteAllClick = {
+                        coroutineScope.launch {
+                            viewModel.deleteAllCartItems()
 
-                        viewModel.deleteAllCartItems()
+                        }},
+                    onOrderClick = {
+                        coroutineScope.launch {
+                            showOrderCreateNotification(context)
+                            viewModel.addNewOrder()
+                            viewModel.deleteAllCartItems()
+                            navController.navigate(OrderDestination.route) {
+                                popUpTo(CartDestination.route) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        }
                     }
                 )
             })

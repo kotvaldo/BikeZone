@@ -62,7 +62,7 @@ class RegisterViewModel(private val userRepository: UserRepository) : ViewModel(
     }
 
     suspend fun saveItem() {
-        userRepository.insertItem(registerUiState.userDetails.toUser())
+        userRepository.insert(registerUiState.userDetails.toUser())
     }
 
     private fun verifySamePasswds(registerDetails: RegisterUserDetails = registerUiState.userDetails): Boolean {

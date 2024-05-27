@@ -27,7 +27,7 @@
     <string name="str_password_not_match">Heslá sa nezhodujú </string>
     <string name="str_aldready_exist">Účet už existuje, prihláste sa</string>
     <string name="cd_nav_back">navBack</string>
-    <string name="str_order">Orders</string>
+    <string name="str_order">Objednávky</string>
     <string name="str_success_update">Aktualizácia prebehla úspešne</string>
     <string name="str_want_to_sign_out">Naozaj sa chcete odhlásiť?</string>
     <string name="str_sign_out_account">Odhlásenie</string>
@@ -44,6 +44,20 @@
     <string name="str_total_price">Celková cena :</string>
     <string name="str_count">Počet: </string>
     <string name="str_delete_all_items">Vymazať všetky položky </string>
+    <string name="channel_name">Vymazanie profilu</string>
+    <string name="channel_description">Notifikácie pre vymazanie profilu</string>
+    <string name="delete_acc_notification_title">Vymazanie profilu úspešné</string>
+    <string name="delete_acc_notification_text">Vaše údaje boli úspešne vymazané</string>
+    <string name="order_channel_name">Objednávky</string>
+    <string name="order_channel_description">Notifikácie pre objednávky</string>
+    <string name="order_notification_title">Vytvorenie objednávky</string>
+    <string name="order_delete_notification_title">Zrušenie objednávky</string>
+    <string name="order_delete_notification_text">Objednávka č.: %1$s bola úspešne zrušená</string>
+    <string name="order_notification_text">Objednávka bola úspešne vytvorená</string>
+    <string name="order_date">Dátum objednávky:</string>
+    <string name="order_count">Počet Položiek:</string>
+    <string name="order_id">Číslo objednávky:</string>
+    <string name="order_delete">Zrušiť objednávku</string>
     <string name="str_desc_of_item">
         Rám: ľahký hliníkový, L \n
         Kolesá: 29-palcové \n
@@ -51,15 +65,4 @@
         Brzdový systém: kotúčové, Shimano N590 \n
         Sedlo: ergonomické
     </string>
-
-    <string name="channel_name">Odhlásenie</string>
-    <string name="channel_description">Notifikácie pre odhlásenie</string>
-    <string name="logout_notification_title">Odhlásenie úspešné</string>
-    <string name="logout_notification_text">Boli ste úspešne odhlásení</string>
-
-    <string name="order_channel_name">Objednávky</string>
-    <string name="order_channel_description">Notifikácie pre vytvorenie objednávky</string>
-    <string name="order_notification_title">Objednávka vytvorená</string>
-    <string name="order_notification_text">Vaša objednávka bola úspešne vytvorená</string>
-
 </resources>

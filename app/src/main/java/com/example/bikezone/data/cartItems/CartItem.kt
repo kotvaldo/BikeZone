@@ -17,5 +17,6 @@ import com.example.bikezone.data.items.Item
 data class CartItem(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val itemId: Int,
-    val count: Int
+    val count: Int,
+    val userId: Int
 )

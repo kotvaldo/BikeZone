@@ -4,14 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bikezone.data.cartItems.CartRepository
 import com.example.bikezone.data.items.ItemRepository
+import com.example.bikezone.data.orders.Order
+import com.example.bikezone.data.orders.OrderRepository
+import com.example.bikezone.data.users.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import java.util.Date
 
-class CartViewModel(private val cartRepository: CartRepository, private val itemRepository: ItemRepository,
+class CartViewModel(
+    private val cartRepository: CartRepository,
+    private val itemRepository: ItemRepository,
+    private val orderRepository: OrderRepository,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
 
@@ -24,37 +32,50 @@ class CartViewModel(private val cartRepository: CartRepository, private val item
 
     private fun initializeCartUiState() {
         viewModelScope.launch {
-            cartRepository.getAllCartItemsStream().collect { cartItems ->
-                val cartItemDetails = cartItems.mapNotNull { cartItem ->
-                    val item = itemRepository.getItemByIdStream(cartItem.itemId).firstOrNull()
-                    if (item != null) {
-                        CartItemDetail(
-                            cartItemId = cartItem.id,
-                            itemDetail = ItemDetail(
-                                id = item.id,
-                                name = item.name,
-                                price = item.price,
-                                picture = item.picture,
-                                desc = item.desc
-                            ),
-                            count = cartItem.count
-                        )
-                    } else {
-                        null
+            val authUser = userRepository.getAuthUserStream(true).first()
+            if(authUser != null) {
+                cartRepository.getAllCartItemsStream(authUser.id).collect { cartItems ->
+                    val cartItemDetails = cartItems.mapNotNull { cartItem ->
+                        val item = itemRepository.getItemByIdStream(cartItem.itemId).firstOrNull()
+                        if (item != null) {
+                            CartItemDetail(
+                                cartItemId = cartItem.id,
+                                itemDetail = ItemDetail(
+                                    id = item.id,
+                                    name = item.name,
+                                    price = item.price,
+                                    picture = item.picture,
+                                    desc = item.desc
+                                ),
+                                count = cartItem.count,
+                                userId = authUser.id
+                            )
+                        } else {
+                            null
+                        }
                     }
-                }
-                val finalPrice = cartItemDetails.sumOf { it.itemDetail.price * it.count }
-                _cartUiState.value = CartUiState(cartItems = cartItemDetails, finalPrice = finalPrice)
+                    val finalPrice = cartItemDetails.sumOf { it.itemDetail.price * it.count }
+                    _cartUiState.value = CartUiState(cartItems = cartItemDetails, finalPrice = finalPrice)
+            }
+
             }
         }
     }
 
-
-    fun deleteAllCartItems() {
-        viewModelScope.launch {
-            val allCartItems = cartRepository.getAllCartItemsStream().first()
-            cartRepository.deleteAllItems(allCartItems)
+    suspend fun addNewOrder() {
+        val user = userRepository.getAuthUserStream(true).first()
+        if(user != null) {
+            val count = cartUiState.value.cartItems.sumOf { it.count }
+            orderRepository.insert(Order(id = 0, price = cartUiState.value.finalPrice, count , date = Date(), userId = user.id))
         }
+    }
+    suspend fun deleteAllCartItems() {
+            val user = userRepository.getAuthUserStream(true).first()
+            if(user != null) {
+                val allCartItems = cartRepository.getAllCartItemsStream(user.id).first()
+                cartRepository.deleteAllItems(allCartItems)
+            }
+
     }
     fun reduceCountByOne(cartItemId: Int) {
         viewModelScope.launch {
@@ -102,7 +123,8 @@ data class ItemDetail(
 data class CartItemDetail(
     val cartItemId: Int,
     val itemDetail: ItemDetail,
-    val count: Int
+    val count: Int,
+    val userId: Int
 )
 
 data class CartUiState(

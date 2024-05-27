@@ -9,6 +9,6 @@ interface CartRepository {
     suspend fun deleteAllItems(listOfItems: List<CartItem>)
     fun getCartItemByIdStream(id: Int): Flow<CartItem?>
     fun getCartItemByItemIdStream(itemId: Int): Flow<CartItem?>
-    fun getAllCartItemsStream(): Flow<List<CartItem>>
+    fun getAllCartItemsStream(userId:Int): Flow<List<CartItem>>
 
 }

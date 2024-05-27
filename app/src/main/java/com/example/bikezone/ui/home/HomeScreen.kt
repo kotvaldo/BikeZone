@@ -39,11 +39,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.bikezone.BikeZoneBottomAppBar
@@ -169,12 +168,10 @@ private fun ItemCard(
                 .height(10.dp))
             Text(
                 text = item.name,
-                style = MaterialTheme.typography.titleLarge,
+                fontSize = 25.sp,
                 color = MaterialTheme.colorScheme.onSurface,
-                fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.Bold,
-                textDecoration = TextDecoration.Underline,
-                fontStyle = FontStyle.Italic,
+                fontStyle = FontStyle.Normal,
 
             )
             Spacer(
@@ -185,16 +182,14 @@ private fun ItemCard(
             ) {
                 Text(
                     text = stringResource(id = R.string.str_price),
-                    style = MaterialTheme.typography.titleLarge,
+                    fontSize = 20.sp,
                     color = colorResource(id = R.color.custom_orange),
-                    fontFamily = FontFamily.Default,
                 )
                 Spacer(Modifier.width(15.dp))
                 Text(
                     text = NumberFormat.getCurrencyInstance().format(item.price).toString(),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface  ,
-                    fontFamily = FontFamily.Default,
+                    fontSize = 20.sp,
+                    color = MaterialTheme.colorScheme.onSurface ,
 
                 )
             }

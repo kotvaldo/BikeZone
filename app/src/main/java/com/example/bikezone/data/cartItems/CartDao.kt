@@ -27,6 +27,6 @@ interface CartDao {
     @Query("SELECT * FROM cart_items WHERE itemId = :itemId")
     fun getCartItemByItemId(itemId: Int): Flow<CartItem?>
 
-    @Query("SELECT * FROM cart_items")
-    fun getAllCartItems(): Flow<List<CartItem>>
+    @Query("SELECT * FROM cart_items WHERE userId = :userId ")
+    fun getAllCartItems(userId: Int): Flow<List<CartItem>>
 }

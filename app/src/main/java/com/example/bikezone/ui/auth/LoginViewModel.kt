@@ -44,7 +44,7 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
                 userRepository.getUserByEmailAndPasswordStream(emailInput, passwordInput)
                     .firstOrNull()?.let { currentUser ->
                         val updatedUser = currentUser.copy(auth = true)
-                        userRepository.updateItem(updatedUser)
+                        userRepository.update(updatedUser)
                         _loginUiState.update { currentState ->
                             currentState.copy(
                                 isAuthenticated = true,

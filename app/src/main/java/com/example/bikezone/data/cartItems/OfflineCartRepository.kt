@@ -15,6 +15,6 @@ class OfflineCartRepository(private val cartDao: CartDao) : CartRepository {
     override fun getCartItemByIdStream(id: Int): Flow<CartItem?> = cartDao.getCartItembyId(id)
 
     override fun getCartItemByItemIdStream(itemId: Int): Flow<CartItem?> = cartDao.getCartItemByItemId(itemId)
-    override fun getAllCartItemsStream(): Flow<List<CartItem>> = cartDao.getAllCartItems()
+    override fun getAllCartItemsStream(userId: Int): Flow<List<CartItem>> = cartDao.getAllCartItems(userId)
 
 }

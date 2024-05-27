@@ -7,6 +7,7 @@ import com.example.bikezone.data.cartItems.CartItem
 import com.example.bikezone.data.cartItems.CartRepository
 import com.example.bikezone.data.items.Item
 import com.example.bikezone.data.items.ItemRepository
+import com.example.bikezone.data.users.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -16,8 +17,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val itemRepository: ItemRepository,
-                    private val cartRepository: CartRepository,) : ViewModel() {
+class HomeViewModel(
+    private val itemRepository: ItemRepository,
+    private val cartRepository: CartRepository,
+    private val userRepository: UserRepository,
+    ) : ViewModel() {
 
     private val _homeUiState = MutableStateFlow(HomeUiState())
     val homeUiState: StateFlow<HomeUiState> = _homeUiState.asStateFlow()
@@ -67,11 +71,15 @@ class HomeViewModel(private val itemRepository: ItemRepository,
     fun addItemToCart(itemId: Int) {
         viewModelScope.launch {
             val cartItem = cartRepository.getCartItemByItemIdStream(itemId).first()
-            if (cartItem == null) {
-                cartRepository.insert(CartItem(itemId = itemId, count = 1))
-            } else {
-                cartRepository.update(cartItem.copy(count = cartItem.count + 1))
+            val authUser = userRepository.getAuthUserStream(true).first()
+            if(authUser != null) {
+                if (cartItem == null) {
+                    cartRepository.insert(CartItem(itemId = itemId, count = 1, userId = authUser.id))
+                } else {
+                    cartRepository.update(cartItem.copy(count = cartItem.count + 1))
+                }
             }
+
         }
     }
 

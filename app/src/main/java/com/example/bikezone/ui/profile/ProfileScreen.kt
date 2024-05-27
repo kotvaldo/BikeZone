@@ -1,7 +1,5 @@
 package com.example.bikezone.ui.profile
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
@@ -54,15 +52,12 @@ import com.example.bikezone.BikeZoneTopAppBar
 import com.example.bikezone.R
 import com.example.bikezone.data.users.UserDetails
 import com.example.bikezone.navigation.HomeDestination
-import com.example.bikezone.navigation.LoginDestination
-import com.example.bikezone.navigation.Routes
-import com.example.bikezone.notifications.showLogoutNotification
+import com.example.bikezone.notifications.showDeleteAccountNotification
 import com.example.bikezone.ui.AppViewModelProvider
 import com.example.bikezone.ui.components.CustomTextField
 import com.example.bikezone.ui.theme.BikeZoneTheme
 import kotlinx.coroutines.launch
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun ProfileScreen(
     navController: NavHostController,
@@ -117,14 +112,9 @@ fun ProfileScreen(
                         onDismiss = { showDeleteDialog = false },
                         onAccept = {
                             coroutineScope.launch {
+                                showDeleteAccountNotification(context)
                                 viewModel.deleteUser()
-                            }
-                            navController.navigate(Routes.AuthRoute.route) {
-                                navController.navigate(Routes.AuthRoute.route) {
-                                    popUpTo(0) { inclusive = true }  // Clear the back stack
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
+
                             }
                         }
                     )
@@ -138,18 +128,12 @@ fun ProfileScreen(
                         onDismiss = { showSignOutDialog = false },
                         onAccept = {
                             coroutineScope.launch {
-                                showLogoutNotification(context)
                                 viewModel.updateUiState(
                                     userDetails = viewModel.profileUiState.userDetails.copy(
                                         auth = false
                                     )
                                 )
                                 viewModel.updateUser()
-                                navController.navigate(LoginDestination.route) {
-                                    popUpTo(LoginDestination.route) {
-                                        inclusive = true
-                                    }
-                                }
                             }
 
                         }

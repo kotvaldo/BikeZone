@@ -9,9 +9,9 @@ interface UserRepository {
     fun getUserByEmailAndPasswordStream(email:String, password:String): Flow<User?>
     fun getUserByEmailStream(email:String): Flow<User?>
 
-    suspend fun insertItem(user: User)
+    suspend fun insert(user: User)
 
-    suspend fun deleteItem(user: User)
+    suspend fun delete(user: User)
 
-    suspend fun updateItem(user: User)
+    suspend fun update(user: User)
 }
