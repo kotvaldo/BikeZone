@@ -18,7 +18,7 @@ class ItemDetailsViewModel(
     private val itemsRepository: ItemRepository,
 ) : ViewModel() {
 
-    private val itemId: Int = checkNotNull(savedStateHandle[ItemDetailsDestination.itemIdArg])
+    private val itemId: Int = checkNotNull(savedStateHandle[ItemDetailsDestination.ITEM_ID_ARG])
     val uiState: StateFlow<ItemDetailsUiState> =
         itemsRepository.getItemByIdStream(itemId)
             .filterNotNull()

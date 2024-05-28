@@ -34,8 +34,8 @@ object ItemDetailsDestination : AppNavigationDestination {
     override val titleRes = R.string.str_item_detail
     override val selectedIcon: ImageVector = Icons.Filled.Home
     override val unselectedIcon: ImageVector = Icons.Outlined.Home
-    const val itemIdArg = "itemId"
-    val routeWithArgs = "$route/{$itemIdArg}"
+    const val ITEM_ID_ARG = "itemId"
+    val routeWithArgs = "$route/{$ITEM_ID_ARG}"
 }
 
 object ProfileDestination : AppNavigationDestination {

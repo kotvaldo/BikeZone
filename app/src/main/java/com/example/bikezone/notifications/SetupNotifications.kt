@@ -113,7 +113,7 @@ fun showDeleteOrderNotification(context: Context, orderDetail: OrderDetail) {
 
     val builder = NotificationCompat.Builder(context, ORDER_CHANNEL_ID)
         .setSmallIcon(R.drawable.baseline_shopping_cart_checkout_24)  // Uistite sa, že máte túto ikonu v drawable zdrojoch
-        .setContentTitle(context.getString(R.string.order_delete_notification_title, orderDetail.id.toString()))
+        .setContentTitle(context.getString(R.string.order_delete_notification_title))
         .setContentText(context.getString(R.string.order_delete_notification_text, orderDetail.id.toString()))
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
