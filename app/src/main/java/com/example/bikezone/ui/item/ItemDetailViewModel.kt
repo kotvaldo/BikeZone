@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.stateIn
 
 class ItemDetailsViewModel(
     savedStateHandle: SavedStateHandle,
-    private val itemsRepository: ItemRepository,
+    itemsRepository: ItemRepository,
 ) : ViewModel() {
 
     private val itemId: Int = checkNotNull(savedStateHandle[ItemDetailsDestination.ITEM_ID_ARG])
