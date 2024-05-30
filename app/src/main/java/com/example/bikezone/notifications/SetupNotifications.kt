@@ -37,25 +37,18 @@ fun showDeleteAccountNotification(context: Context) {
     }
 
     val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-        .setSmallIcon(R.drawable.baseline_logout_24)  // Musíte mať túto ikonu v drawable zdrojoch
+        .setSmallIcon(R.drawable.baseline_logout_24)
         .setContentTitle(context.getString(R.string.delete_acc_notification_title))
         .setContentText(context.getString(R.string.delete_acc_notification_text))
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
     with(NotificationManagerCompat.from(context)) {
-        // Zobraziť notifikáciu
+
         if (ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.POST_NOTIFICATIONS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
         notify(NOTIFICATION_ID, builder.build())
@@ -77,19 +70,17 @@ fun showOrderCreateNotification(context: Context) {
     }
 
     val builder = NotificationCompat.Builder(context, ORDER_CHANNEL_ID)
-        .setSmallIcon(R.drawable.baseline_shopping_cart_checkout_24)  // Uistite sa, že máte túto ikonu v drawable zdrojoch
+        .setSmallIcon(R.drawable.baseline_shopping_cart_checkout_24)
         .setContentTitle(context.getString(R.string.order_notification_title))
         .setContentText(context.getString(R.string.order_notification_text))
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
     with(NotificationManagerCompat.from(context)) {
-        // Zobraziť notifikáciu
         if (ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.POST_NOTIFICATIONS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // Tu požiadajte o povolenie ak nie je udelené
             return
         }
         notify(ORDER_NOTIFICATION_ID, builder.build())
@@ -112,19 +103,18 @@ fun showDeleteOrderNotification(context: Context, orderDetail: OrderDetail) {
     }
 
     val builder = NotificationCompat.Builder(context, ORDER_CHANNEL_ID)
-        .setSmallIcon(R.drawable.baseline_shopping_cart_checkout_24)  // Uistite sa, že máte túto ikonu v drawable zdrojoch
+        .setSmallIcon(R.drawable.baseline_shopping_cart_checkout_24)
         .setContentTitle(context.getString(R.string.order_delete_notification_title))
         .setContentText(context.getString(R.string.order_delete_notification_text, orderDetail.id.toString()))
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
     with(NotificationManagerCompat.from(context)) {
-        // Zobraziť notifikáciu
         if (ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.POST_NOTIFICATIONS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // Tu požiadajte o povolenie ak nie je udelené
+            // Tu sa žiada povolenie ak nie je udelené
             return
         }
         notify(ORDER_NOTIFICATION_ID, builder.build())
